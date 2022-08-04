@@ -5,6 +5,7 @@ import com.therap.supply.chain.user.dto.ProductDTO;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
 import com.therap.supply.chain.user.service.impl.FileServiceImpl;
 import com.therap.supply.chain.user.service.impl.ProductServiceImpl;
+import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class ProductController {
     private DealerServiceImpl dealerService;
 
     @Autowired
+    private RequisitionServiceImpl requisitionService;
+
+    @Autowired
     private FileServiceImpl fileService;
 
     @Value("${project.image}")
@@ -49,6 +53,8 @@ public class ProductController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
+            model.addAttribute("totalProduct", this.requisitionService
+                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "product/authenticated/show-all-products";
         }
         return "product/show-all-products";
@@ -66,6 +72,8 @@ public class ProductController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
+            model.addAttribute("totalProduct", this.requisitionService
+                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "product/authenticated/show-single-product";
         }
         return "product/show-single-product";
@@ -79,6 +87,8 @@ public class ProductController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
+        model.addAttribute("totalProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         ProductDTO productDTO = this.productService.getSingleProduct(productId);
         System.err.println(productId);

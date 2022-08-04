@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @Author: Md. Tanver Ahammed,
  * ICT, MBSTU
@@ -42,27 +47,33 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
     public Boolean addProductsDealerCart(Long dealerId, Long productId) {
         Dealer dealer = this.dealerService.getDealer(dealerId);
         Product product = this.productService.getProduct(productId);
-        Requisition requisition = null;
-        requisition = this.requisitionRepository
+        Requisition requisition = this.requisitionRepository
                 .getByDealerAndIsSubmittedByDealer(dealer, false);
         if (requisition == null) {
             requisition = new Requisition();
             requisition.setDealer(dealer);
             this.requisitionRepository.save(requisition);
         }
+        requisition.setDate(new Date());
 
         RequisitionProductHistory requisitionProductHistory =
-                this.requisitionProductHistoryRepository.getByRequisitionAndProduct(requisition, product);
+                this.requisitionProductHistoryRepository.getByRequisitionAndProductAndIsDeleted(requisition, product, false);
+        if (requisitionProductHistory == null) {
+            List<RequisitionProductHistory>rpHistories = this.requisitionProductHistoryRepository.getByIsDeleted(true);
+            if (rpHistories.size() > 0) {
+                requisitionProductHistory = rpHistories.get(0);
+                requisitionProductHistory.setQuantity(0L);
+            }
+        }
 
         if (requisitionProductHistory == null) {
             requisitionProductHistory = new RequisitionProductHistory();
-            requisitionProductHistory.setProduct(product);
-            requisitionProductHistory.setRequisition(requisition);
             requisitionProductHistory.setQuantity(0L);
         }
-
+        requisitionProductHistory.setDeleted(false);
+        requisitionProductHistory.setProduct(product);
+        requisitionProductHistory.setRequisition(requisition);
         requisitionProductHistory.setQuantity(requisitionProductHistory.getQuantity() + 1);
-        requisitionProductHistory.setReqProductName(product.getName());
         requisitionProductHistory.setPrice(product.getDiscountPrice());
 
         this.requisitionProductHistoryRepository.save(requisitionProductHistory);
@@ -70,7 +81,7 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
 
         // set total price
         Double totalPrice = this.requisitionService
-                .getTotalPriceRequisition(requisition.getRequisitionProductHistories());
+                .getTotalPriceRequisition(requisition);
         requisition.setTotalAmountPrice(totalPrice);
 
         this.requisitionRepository.save(requisition);
@@ -79,18 +90,19 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
     }
 
 
-    @Transactional
     public String deleteProductFromDealerCart(Long requisitionId, Long rphId) {
         RequisitionProductHistory requisitionProductHistory = this.requisitionProductHistoryService
                 .getRequisitionProductHistory(rphId);
 
-        this.requisitionProductHistoryRepository.delete(requisitionProductHistory);
+        requisitionProductHistory.setDeleted(true);
+        requisitionProductHistory = this.requisitionProductHistoryRepository.save(requisitionProductHistory);
 
         Requisition requisition = this.requisitionService.getRequisition(requisitionId);
+        requisition.getRequisitionProductHistories().stream().map(rph -> !rph.isDeleted()).collect(Collectors.toList());
 
         // set total price
         Double totalPrice = this.requisitionService
-                .getTotalPriceRequisition(requisition.getRequisitionProductHistories());
+                .getTotalPriceRequisition(requisition);
         requisition.setTotalAmountPrice(totalPrice);
         this.requisitionRepository.save(requisition);
 

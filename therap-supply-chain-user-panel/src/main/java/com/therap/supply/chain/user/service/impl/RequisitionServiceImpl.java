@@ -46,12 +46,13 @@ public class RequisitionServiceImpl implements RequisitionService {
     }
 
     @Override
-    public Double getTotalPriceRequisition(List<RequisitionProductHistory> requisitionProductHistories) {
-        double totalPrice = 0;
-        for (RequisitionProductHistory history : requisitionProductHistories) {
-            totalPrice += history.getPrice() * history.getQuantity();
-        }
-        return totalPrice;
+    public Double getTotalPriceRequisition(Requisition requisition) {
+        return requisition
+                .getRequisitionProductHistories()
+                .stream()
+                .filter(rph -> !rph.isDeleted())
+                .mapToDouble(rph -> rph.getQuantity() * rph.getPrice())
+                .sum();
     }
 
     // get requisition
@@ -62,6 +63,10 @@ public class RequisitionServiceImpl implements RequisitionService {
 
     // requisition to requisitionDTO
     public RequisitionDTO requisitionToRequisitionDTO(Requisition requisition) {
+        requisition.setRequisitionProductHistories(requisition
+                .getRequisitionProductHistories().stream()
+                .filter(rph -> !rph.isDeleted()).collect(Collectors.toList())
+        );
         RequisitionDTO requisitionDTO = this.modelMapper.map(requisition, RequisitionDTO.class);
         requisitionDTO.setDealerDTO(this.modelMapper.map(requisition.getDealer(), DealerDTO.class));
         requisitionDTO.getDealerDTO().setPassword(null);

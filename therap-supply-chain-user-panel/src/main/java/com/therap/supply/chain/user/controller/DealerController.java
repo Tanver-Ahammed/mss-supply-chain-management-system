@@ -3,6 +3,7 @@ package com.therap.supply.chain.user.controller;
 import com.therap.supply.chain.user.dto.DealerDTO;
 import com.therap.supply.chain.user.service.DealerService;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
+import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class DealerController {
     @Autowired
     private DealerServiceImpl dealerService;
 
+    @Autowired
+    private RequisitionServiceImpl requisitionService;
+
     @GetMapping(path = "/add")
     public String addDealer(Model model, Principal principal) {
 
@@ -41,6 +45,8 @@ public class DealerController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
+            model.addAttribute("totalProduct", this.requisitionService
+                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "dealer/authenticated-registration-dealer";
         }
         return "dealer/registration-dealer";
@@ -51,7 +57,7 @@ public class DealerController {
                                      @RequestParam(value = "dealerImage", required = false) MultipartFile dealerImage,
                                      @RequestParam(value = "dealerNID", required = false) MultipartFile dealerNID,
                                      @RequestParam(value = "dealerTIN", required = false) MultipartFile dealerTIN,
-                                     Model model) throws IOException {
+                                     Model model, Principal principal) throws IOException {
         model.addAttribute("dealerDTO", dealerDTO);
         if (result.hasErrors()) {
             return "dealer/registration-dealer";
@@ -78,6 +84,15 @@ public class DealerController {
 
         model.addAttribute("dealerDTO", new DealerDTO());
         model.addAttribute("message", "dealer is successfully added...");
+
+        // get logged-in username
+        if (principal != null) {
+            DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
+            model.addAttribute("dealer", dealer);
+            model.addAttribute("totalProduct", this.requisitionService
+                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            return "dealer/authenticated-registration-dealer";
+        }
         return "dealer/registration-dealer";
     }
 
@@ -89,6 +104,8 @@ public class DealerController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
+        model.addAttribute("totalProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         DealerDTO dealerDTO = this.dealerService.getSingleDealerById(dealer.getId());
 
@@ -109,6 +126,8 @@ public class DealerController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
+        model.addAttribute("totalProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         DealerDTO dealerDTO = this.dealerService.getSingleDealerById(dealer.getId());
 
@@ -129,6 +148,8 @@ public class DealerController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
+        model.addAttribute("totalProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         if (result.hasErrors()) {
             model.addAttribute("dealerDTO", dealerDTO);

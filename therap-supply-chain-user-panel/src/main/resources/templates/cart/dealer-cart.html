@@ -13,9 +13,11 @@
 
 <section>
 
-    <div class="container">
+    <div class="container" style="text-align: center">
         <div class="row row-cols-3">
 
+            <h1 style="text-align: center">My Product Cart</h1>
+            <br>
             <div th:if="${requisitionDTO.requisitionProductHistoryDTOS.isEmpty()}">
                 <td colspan="3"> No Cart is Empty!!</td>
             </div>
@@ -35,11 +37,11 @@
                 <div th:each="requisitionProductHistory : ${requisitionDTO.requisitionProductHistoryDTOS}">
                     <tr>
                         <th scope="row" th:text="${'PROD-' + requisitionProductHistory.id}"></th>
-                        <td th:text="${requisitionProductHistory.reqProductName}"></td>
+                        <td th:text="${requisitionProductHistory.productDTO.name}"></td>
                         <td th:text="${requisitionProductHistory.price}"></td>
                         <td th:text="${requisitionProductHistory.quantity}"></td>
                         <td th:text="${requisitionProductHistory.quantity *
-                        requisitionProductHistory.price}"></td>
+                            requisitionProductHistory.price}"></td>
                         <td>
                             <a th:href="@{${'/dealer/cart/requisition/' + requisitionDTO.id + '/delete/' + requisitionProductHistory.id}}">
                                 <i class="far fa-solid fa-trash"></i>
@@ -47,9 +49,18 @@
                         </td>
                     </tr>
                 </div>
+                <tr class="table-info">
+                    <td th:colspan="4"><b th:text="${'Total Price'}"></b></td>
+                    <td><b th:text="${requisitionDTO.totalAmountPrice}"></b></td>
+                    <td></td>
+                </tr>
                 </tbody>
-
             </table>
+            <div>
+                <a th:href="@{${'/dealer/cart/checkout/'}}" type="submit"
+                   class="btn btn-success">Checkout Product Cart
+                </a>
+            </div>
         </div>
     </div>
 

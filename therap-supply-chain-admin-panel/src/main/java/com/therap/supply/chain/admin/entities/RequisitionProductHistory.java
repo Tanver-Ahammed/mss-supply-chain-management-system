@@ -22,7 +22,7 @@ public class RequisitionProductHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String reqProductName;
+    // private String reqProductName;
 
     private boolean isDeleted;
 

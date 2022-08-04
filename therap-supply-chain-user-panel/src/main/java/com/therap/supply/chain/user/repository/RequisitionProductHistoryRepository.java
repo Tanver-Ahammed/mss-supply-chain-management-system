@@ -5,8 +5,12 @@ import com.therap.supply.chain.user.entities.Requisition;
 import com.therap.supply.chain.user.entities.RequisitionProductHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface RequisitionProductHistoryRepository extends JpaRepository<RequisitionProductHistory, Long> {
 
-    RequisitionProductHistory getByRequisitionAndProduct(Requisition requisition, Product product);
+    RequisitionProductHistory getByRequisitionAndProductAndIsDeleted(Requisition requisition, Product product, boolean isDeleted);
+
+    List<RequisitionProductHistory> getByIsDeleted(boolean isDeleted);
 
 }

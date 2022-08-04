@@ -16,7 +16,7 @@ public class RequisitionProductHistoryDTO {
 
     private Long id;
 
-    private String reqProductName;
+    // private String reqProductName;
 
     private boolean isDeleted;
 
