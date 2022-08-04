@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Add New Dealer </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{/dealer/save}" th:object="${dealerDTO}" method="post"
+                          enctype="multipart/form-data" onsubmit="return dealerFormValidator()">
+
+                        <!--dealer name div....-->
+                        <div class="mb-3">
+                            <label for="dealerName" class="form-label">Dealer Name</label>
+                            <input
+                                    type="text"
+                                    id="dealerName"
+                                    name="name"
+                                    th:field="*{name}"
+                                    th:value="${dealerDTO.name}"
+                                    th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackStudentId"
+                            >
+                            <span id="nameMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('name')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerName"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--dealer contact div....-->
+                        <div class="mb-3">
+                            <label for="dealerContact" class="form-label">Dealer Contact Number</label>
+                            <input
+                                    type="text"
+                                    id="dealerContact"
+                                    name="contact"
+                                    th:field="*{contact}"
+                                    th:value="${dealerDTO.contact}"
+                                    th:classappend="${#fields.hasErrors('contact') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackDealerContact"
+                            >
+                            <span id="contactMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('contact')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerContact"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--dealer email div....-->
+                        <div class="mb-3">
+                            <label for="dealerEmail" class="form-label">Dealer Email</label>
+                            <input
+                                    type="email"
+                                    id="dealerEmail"
+                                    name="email"
+                                    th:field="*{email}"
+                                    th:value="${dealerDTO.email}"
+                                    th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackDealerEmail"
+                            >
+                            <span id="emailMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('email')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerEmail"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--dealer age div....-->
+                        <div class="mb-3">
+                            <label for="dealerAge" class="form-label">Dealer Age</label>
+                            <input
+                                    type="number"
+                                    id="dealerAge"
+                                    name="age"
+                                    min="18"
+                                    max="60"
+                                    th:field="*{age}"
+                                    th:value="${dealerDTO.age}"
+                                    th:classappend="${#fields.hasErrors('age') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackDealerAge"
+                            >
+                            <span id="ageMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('age')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerAge"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--dealer address div....-->
+                        <div class="mb-3">
+                            <label for="dealerAddress" class="form-label">Dealer Address</label>
+                            <input
+                                    type="text"
+                                    id="dealerAddress"
+                                    name="address"
+                                    th:field="*{address}"
+                                    th:value="${dealerDTO.address}"
+                                    th:classappend="${#fields.hasErrors('address') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackDealerAddress"
+                            >
+                            <span id="addressMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('address')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerAddress"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--blood donor image div-->
+                        <div class="mb-3">
+                            <label for="dealerImage" class="form-label">Dealer's Image</label>
+                            <input
+                                    type="file"
+                                    id="dealerImage"
+                                    name="dealerImage"
+                                    accept="image/*"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="emailHelp">
+                        </div>
+
+                        <!--blood donor NID div-->
+                        <div class="mb-3">
+                            <label for="dealerNID" class="form-label">Dealer's NID</label>
+                            <input
+                                    type="file"
+                                    id="dealerNID"
+                                    name="dealerNID"
+                                    accept="application/pdf"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="emailHelp">
+                        </div>
+
+                        <!--blood donor TIN div-->
+                        <div class="mb-3">
+                            <label for="dealerTIN" class="form-label">Dealer's TIN Certificate</label>
+                            <input
+                                    type="file"
+                                    id="dealerTIN"
+                                    name="dealerTIN"
+                                    accept="application/pdf"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="emailHelp">
+                        </div>
+
+                        <!--dealer password div....-->
+                        <div class="mb-3">
+                            <label for="dealerPassword" class="form-label">Dealer Password</label>
+                            <input
+                                    type="password"
+                                    id="dealerPassword"
+                                    class="form-control"
+                                    th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+                                    aria-describedby="validationServer03FeedbackDealerPasswordPassword"
+                            >
+                            <span id="passwordMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('password')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerPasswordPassword"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--dealer confirm password div....-->
+                        <div class="mb-3">
+                            <label for="dealerConfirmPassword" class="form-label">Dealer Confirm
+                                Password</label>
+                            <input
+                                    type="password"
+                                    id="dealerConfirmPassword"
+                                    name="password"
+                                    th:field="*{password}"
+                                    th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackDealerConfirmPassword"
+                            >
+                            <span id="confirmPasswordMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('password')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerConfirmPassword"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--student reset & submit div....-->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" class="btn btn-success">Registration</button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

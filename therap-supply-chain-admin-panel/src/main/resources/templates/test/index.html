@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // function loadAboutInformation() {
+        //     console.log("Tanver");
+        //     // create XHR Object (XML http request)
+        //     let xhr = new XMLHttpRequest();
+
+        //     // open function
+        //     xhr.open("GET", "http://localhost:8081/");
+
+        //     xhr.onreadystatechange = function () {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             console.log(this.responseText);
+        //         }
+        //     };
+        //     xhr.send();
+        // }
+        function loadAboutInformation() {
+            let confirmAction = confirm("Are you want to Registration?");
+            if (confirmAction) {
+                alert("Registration Successfully...");
+            } else {
+                alert("Registration Canceled!!");
+            }
+        }
+    </script>
+    <title>Home</title>
+</head>
+
+<body>
+
+<h1>Welcome to home page.</h1>
+
+<h1><a href="about.html">About</a></h1>
+
+<button onclick="loadAboutInformation()">Load About</button>
+
+<div class="container">
+
+</div>
+
+</body>
+
+</html>

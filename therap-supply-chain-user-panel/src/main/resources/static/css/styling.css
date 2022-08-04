@@ -1,0 +1,31 @@
+body {
+    background: #e2e2e2 !important;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.fa-stack[data-count]:after{
+    position:absolute;
+    right:0;
+    top:0;
+    content: attr(data-count);
+    font-size:40%;
+    padding:.6em;
+    border-radius:999px;
+    line-height:.75em;
+    text-align:center;
+    min-width:2em;
+    font-weight:bold;
+    background: white;
+    border-style:solid;
+}
+
+.far {
+    color: red;
+}

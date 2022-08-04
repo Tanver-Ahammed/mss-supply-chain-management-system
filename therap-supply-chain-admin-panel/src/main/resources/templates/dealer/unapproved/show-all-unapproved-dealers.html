@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+
+    <div class="container">
+        <div class="row row-cols-3">
+
+            <div class="nav-item dropdown">
+                <button class="nav-link dropdown-toggle btn" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Activation Status
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" th:href="@{/approver/dealer/all}">ALL</a></li>
+                    <li><a class="dropdown-item" th:href="@{/approver/dealer/active}">ACTIVE</a></li>
+                    <li><a class="dropdown-item" th:href="@{/approver/dealer/inactive}">INACTIVE</a></li>
+                    <li><a class="dropdown-item" th:href="@{/approver/dealer/cancel}">CANCEL</a></li>
+                </ul>
+            </div>
+            <br>
+            <br>
+
+            <div th:if="${dealerDTOS.isEmpty()}">
+                <td colspan="3"> No Dealer Available Now!!</td>
+            </div>
+            <h1 th:text="${message}"></h1>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Dealer Id</th>
+                    <th scope="col">Dealer Name</th>
+                    <th scope="col">Dealer Email</th>
+                    <th scope="col">Dealer Contact</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody class="table-warning">
+                <div th:each="dealerDTO : ${dealerDTOS}">
+                    <tr>
+                        <th scope="row" th:text="${'DEL-' + dealerDTO.id}"></th>
+                        <td th:text="${dealerDTO.name}"></td>
+                        <td th:text="${dealerDTO.email}"></td>
+                        <td th:text="${dealerDTO.contact}"></td>
+                        <td>
+                            <span th:if="${dealerDTO.isActiveByDealerApprover == 'ACTIVE'}">
+                                <i class="fa fag fa-solid fa-check"></i>
+                            </span>
+                            <span th:if="${dealerDTO.isActiveByDealerApprover == 'INACTIVE'}">
+                                <i class="fa fab fa-solid fa-plus"></i>
+                            </span>
+                            <span th:if="${dealerDTO.isActiveByDealerApprover == 'CANCEL'}">
+                                <i class="fa far fa-solid fa-xmark"></i>
+                            </span>
+                        </td>
+                        <td><a th:href="@{${'/approver/dealer/get/' + dealerDTO.id}}">Details</a></td>
+                    </tr>
+                </div>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

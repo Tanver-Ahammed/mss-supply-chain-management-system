@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Hospital Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Update Authority Role </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{${'/md/authority/update/role/' + authorityDTO.id}}" th:object="${authorityDTO}"
+                          method="post"
+                          enctype="multipart/form-data" onsubmit="return authorityFormValidator()">
+
+                        <!--authority name div....-->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Authority Name</label>
+                            <input
+                                    readonly
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    th:field="*{name}"
+                                    th:value="${authorityDTO.name}"
+                                    th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackStudentId"
+                            >
+                            <span id="idMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('name')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityName"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--blood donor contact div....-->
+                        <div class="mb-3">
+                            <label for="contact" class="form-label">Authority Contact Number</label>
+                            <input
+                                    readonly
+                                    type="text"
+                                    id="contact"
+                                    name="contact"
+                                    th:field="*{contact}"
+                                    th:value="${authorityDTO.contact}"
+                                    th:classappend="${#fields.hasErrors('contact') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackAuthorityContact"
+                            >
+                            <span id="contactMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('contact')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityContact"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--authority email div....-->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Authority Email</label>
+                            <input
+                                    readonly
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    th:field="*{email}"
+                                    th:value="${authorityDTO.email}"
+                                    th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackAuthorityEmail"
+                            >
+                            <span id="emailMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('email')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityEmail"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--authority age div....-->
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Authority Age</label>
+                            <input
+                                    readonly
+                                    type="number"
+                                    id="age"
+                                    name="age"
+                                    th:field="*{age}"
+                                    th:value="${authorityDTO.age}"
+                                    th:classappend="${#fields.hasErrors('age') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackAuthorityAge"
+                            >
+                            <span id="ageMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('age')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityAge"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--authority blood group div....-->
+                        <div class="mb-3">
+                            <label for="bloodGroup" class="form-label">Authority Blood Group</label>
+                            <input
+                                    readonly
+                                    type="text"
+                                    id="bloodGroup"
+                                    name="bloodGroup"
+                                    th:field="*{bloodGroup}"
+                                    th:value="${authorityDTO.bloodGroup}"
+                                    th:classappend="${#fields.hasErrors('bloodGroup') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackAuthorityAge"
+                            >
+                            <span id="BloodGroupMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('bloodGroup')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityBloodGroup"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--authority user role div....-->
+                        <div class="mb-3">
+                            <label for="userRole" class="form-label">Authority User Roles</label>
+                            <select
+                                    th:type="Long"
+                                    class="form-select"
+                                    id="userRole"
+                                    name="userRole"
+                                    multiple
+                                    th:value="${authorityDTO.roleDTOS}"
+                                    th:classappend="${#fields.hasErrors('roleDTOS') ? 'is-invalid' : ''}"
+                                    aria-label="Default select example"
+                                    aria-describedby="validationServer03FeedbackAuthorityRole"
+                            >
+                                <option th:each="roleDTO : ${roleDTOS}"
+                                        th:value="${roleDTO.id}"
+                                        th:text="${roleDTO.roleName}"
+                                >
+                                </option>
+                            </select>
+                            <span id="RoleMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('email')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityRole"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--                        blood donor address div....-->
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Authority Address</label>
+                            <input
+                                    readonly
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    th:field="*{address}"
+                                    th:value="${authorityDTO.address}"
+                                    th:classappend="${#fields.hasErrors('address') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackAuthorityAddress"
+                            >
+                            <span id="addressMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('address')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityAddress"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--student reset & submit div....-->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" class="btn btn-success">Update Authority Role</button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

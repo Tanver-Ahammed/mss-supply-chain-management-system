@@ -1,0 +1,37 @@
+body {
+    background: #e2e2e2 !important;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.far {
+    color: red;
+}
+
+.fab {
+    color: blue;
+}
+
+.fag {
+    color: green;
+}
+
+i .fa {
+    font-size: 30px;
+}
+
+th, td {
+    text-align: center;
+}

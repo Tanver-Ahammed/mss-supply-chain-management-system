@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Dealer Login </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{/dealer/login}" method="post"
+                          onsubmit="return dealerFormValidator()">
+
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            Invalid username and password!!
+                        </div>
+
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            You have been logged out successfully...
+                        </div>
+
+                        <!--dealer email div....-->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Dealer Email</label>
+                            <input
+                                    type="email"
+                                    id="email"
+                                    name="username"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackStudentId"
+                            >
+                            <span id="idMessage" style="color: red"></span>
+                        </div>
+
+                        <!--dealer password div....-->
+                        <div class="mb-3">
+                            <label for="dealerPassword" class="form-label">Dealer Password</label>
+                            <input
+                                    type="password"
+                                    id="dealerPassword"
+                                    name="password"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackDealerConfirmPassword"
+                            >
+                            <span id="passwordMessage" style="color: red"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <a th:href="@{/forget/password}">Forgot password</a>
+                        </div>
+                        <!--student reset & submit div....-->
+                        <button type="submit" class="btn btn-success">Login</button>
+                        <button class="btn btn-primary"
+                                onclick="window.location.href = '/dealer/add';">
+                            Registration Dealer
+                        </button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

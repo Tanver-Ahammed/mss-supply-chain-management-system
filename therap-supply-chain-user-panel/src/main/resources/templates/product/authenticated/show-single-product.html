@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="dealer/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+
+    <div class="container">
+        <div class="container col-md-5" style="text-align: center">
+
+            <h1 style="text-align: center">Product Details</h1>
+
+            <div class="card" style="width: 40rem; text-align: center">
+                <img th:src="@{${'/image/' + productDTO.getAttachmentDTO().getAttachmentFileName()}}"
+                     class="single-card-img-top" alt="Not Available Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${'Name of Product: ' + productDTO.name}">Card title</h5>
+                    <p class="card-text" th:text="${'Product Description: ' + productDTO.description}"></p>
+                    <p class="card-text" th:text="${'Product Price: ' + productDTO.price + ' Taka'}"></p>
+                    <a th:if="${productDTO.stock > 0}" th:href="@{${'/dealer/cart/add/product/' + productDTO.id}}"
+                       class="btn btn-success">Add Cart
+                    </a>
+                    <a th:if="${productDTO.stock == 0}" th:href="@{#}"
+                       class="btn btn-warning" disabled="">Out Of Stock
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

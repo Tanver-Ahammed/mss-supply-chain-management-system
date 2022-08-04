@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+        <h1 style="color: red" th:text="${error_message}">{}</h1>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Add New Role </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--authority role form started....-->
+                    <form th:action="@{/role/save}" th:object="${roleDTO}" method="post"
+                          enctype="multipart/form-data" onsubmit="return productFormValidator()">
+
+                        <!--role div....-->
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <input
+                                    type="text"
+                                    id="role"
+                                    name="role"
+                                    th:field="*{role}"
+                                    th:value="${roleDTO.role}"
+                                    th:classappend="${#fields.hasErrors('role') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackStudentId"
+                            >
+                            <span id="roleMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('role')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackRole"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--role div....-->
+                        <div class="mb-3">
+                            <label for="roleName" class="form-label">Role Full Name</label>
+                            <input
+                                    type="text"
+                                    id="roleName"
+                                    name="roleName"
+                                    th:field="*{roleName}"
+                                    th:value="${roleDTO.roleName}"
+                                    th:classappend="${#fields.hasErrors('roleName') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackSRoleName"
+                            >
+                            <span id="roleNameMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('roleName')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackSRoleName"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--student reset & submit div....-->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" class="btn btn-success">Add Role</button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

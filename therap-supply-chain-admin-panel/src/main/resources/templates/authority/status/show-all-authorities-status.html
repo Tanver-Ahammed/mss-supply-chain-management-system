@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+
+    <div class="container">
+        <div class="row row-cols-3">
+
+            <div class="nav-item dropdown">
+                <div>
+                    <button class="nav-link dropdown-toggle btn" id="navbarDropdownStatus" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        Activation Status
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownStatus">
+                        <li><a class="dropdown-item" th:href="@{/md/authority/status/all}">ALL</a></li>
+                        <li><a class="dropdown-item" th:href="@{/md/authority/status/active}">ACTIVE</a></li>
+                        <li><a class="dropdown-item" th:href="@{/md/authority/status/inactive}">INACTIVE</a></li>
+                        <li><a class="dropdown-item" th:href="@{/md/authority/status/cancel}">CANCEL</a></li>
+                    </ul>
+                </div>
+                <button class="nav-link dropdown-toggle btn" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Authority Role
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:each="roleDTO:${roleDTOS}">
+                    <li><a class="dropdown-item" th:href="@{/md/authority/role/0}">ALL</a></li>
+                    <li>
+                        <tr th:each="roleDTO:${roleDTOS}">
+                            <td>
+                                <a class="dropdown-item" th:text="${roleDTO.roleName}"
+                                   th:href="@{${'/md/authority/role/' + roleDTO.id}}">
+                                </a>
+                            </td>
+                        </tr>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <br>
+
+            <div th:if="${authorityDTOS.isEmpty()}">
+                <td colspan="3"> No Authority Available Now!!</td>
+            </div>
+            <h1 th:text="${message}"></h1>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Authority Id</th>
+                    <th scope="col">Authority Name</th>
+                    <th scope="col">Authority Email</th>
+                    <th scope="col">Authority Contact</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody class="table-warning">
+                <div th:each="authorityDTO : ${authorityDTOS}">
+                    <tr>
+                        <th scope="row" th:text="${'AUTH-' + authorityDTO.id}"></th>
+                        <td th:text="${authorityDTO.name}"></td>
+                        <td th:text="${authorityDTO.email}"></td>
+                        <td th:text="${authorityDTO.contact}"></td>
+                        <td>
+                            <span th:if="${authorityDTO.activity == 'ACTIVE'}">
+                                <i class="fa fag fa-solid fa-check"></i>
+                            </span>
+                            <span th:if="${authorityDTO.activity == 'INACTIVE'}">
+                                <i class="fa fab fa-solid fa-plus"></i>
+                            </span>
+                            <span th:if="${authorityDTO.activity == 'CANCEL'}">
+                                <i class="fa far fa-solid fa-xmark"></i>
+                            </span>
+                        </td>
+                        <td><a th:href="@{${'/md/authority/status/get/' + authorityDTO.id}}">Details</a></td>
+                    </tr>
+                </div>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

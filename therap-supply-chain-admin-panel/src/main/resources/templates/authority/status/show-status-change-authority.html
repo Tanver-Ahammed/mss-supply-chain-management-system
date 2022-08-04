@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+
+    <div class="container">
+        <div class="container col-md-5" style="text-align: center">
+
+            <h1 style="text-align: center">Product Details</h1>
+
+            <div class="card" style="width: 40rem; text-align: center">
+                <img th:src="@{${'/product/image/' + authorityDTO.getAttachmentDTO().getAttachmentFileName()}}"
+                     class="single-card-img-top" alt="Not Available Image">
+                <div class="card-body">
+                    <div style="text-align: left">
+                        <h5 class="card-title" th:text="${'Auhtority Name: ' + authorityDTO.name}">Card
+                            title</h5>
+                        <p class="card-title" th:text="${'Auhtority Contact: ' + authorityDTO.contact}">
+                            Card title</p>
+                        <u><p class="card-title" th:text="${'Auhtority Email: ' + authorityDTO.email}">Card
+                            title</p></u>
+                        <p class="card-title" th:text="${'Auhtority Age: ' + authorityDTO.age}">Card
+                            title</p>
+                        <p class="card-title"
+                           th:text="${'Auhtority Blood Group: ' + authorityDTO.bloodGroup}">Card title</p>
+                        <p class="card-title" th:text="${'Auhtority Address: ' + authorityDTO.address}">
+                            Card title</p>
+                        <hr>
+                        <p>Role:</p>
+                        <tr th:each="roleDTO:${authorityDTO.roleDTOS}">
+                            <td><b th:text="${roleDTO.getRoleName()}"/><br></td>
+                        </tr>
+                    </div>
+                    <div th:if="${isLoginPersonMD == 'true'}">
+                        <a th:href="@{${'/md/authority/status/active/' + authorityDTO.id}}" type="submit"
+                           onclick="return approveIsConfirmed()" class="btn btn-success">
+                            Approve Authority
+                        </a>
+                        <a th:href="@{${'/md/authority/status/inactive/' + authorityDTO.id}}" type="submit"
+                           onclick="return approveIsConfirmed()" class="btn btn-warning">
+                            Inactive Authority
+                        </a>
+                        <a th:href="@{${'/md/authority/status/cancel/' + authorityDTO.id}}"
+                           onclick="return CancelIsConfirmed()"
+                           class="btn btn-danger">
+                            Cancel Authority
+                        </a>
+                        <hr>
+                        <a th:href="@{${'/md/authority/edit/role/' + authorityDTO.id}}"
+                           class="btn btn-info">
+                            Edit Authority Role
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

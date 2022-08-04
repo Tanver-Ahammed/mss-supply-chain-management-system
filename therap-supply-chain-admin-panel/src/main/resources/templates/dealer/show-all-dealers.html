@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+
+    <div class="container">
+        <div class="row row-cols-3">
+            <div th:if="${dealerDTOS.isEmpty()}">
+                <td colspan="3"> No Dealer Available Now!!</td>
+            </div>
+            <div th:each="dealerDTO : ${dealerDTOS}">
+                <div class="card" style="width: 18rem; height: 30rem;">
+                    <img th:src="@{${'/product/image/' + dealerDTO.attachmentDTOS.get(0)
+                    .getAttachmentFileName()}}"
+                         height="250" width="150"
+                         class="card-img-top" alt="Not Available Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${'Name: ' + dealerDTO.name}"></h5>
+                        <p class="card-text" th:text="${'Contact: ' + dealerDTO.contact}"></p>
+                        <p class="card-text" th:text="${'Email: ' + dealerDTO.email}"></p>
+                        <a th:href="@{${'/dealer/get/' + dealerDTO.id}}" class="btn btn-success">Details</a>
+                        <a href="#" class="btn btn-success">Add Cart</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br><br>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

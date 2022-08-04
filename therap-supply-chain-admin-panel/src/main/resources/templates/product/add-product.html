@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Add New Product </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{/product/save}" th:object="${productDTO}" method="post"
+                          enctype="multipart/form-data" onsubmit="return productFormValidator()">
+
+                        <!--product name div....-->
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input
+                                    type="text"
+                                    id="productName"
+                                    name="name"
+                                    th:field="*{name}"
+                                    th:value="${productDTO.name}"
+                                    th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackStudentId"
+                            >
+                            <span id="nameMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('name')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackProductName"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--product description div....-->
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Product Description</label>
+                            <input
+                                    type="text"
+                                    id="productDescription"
+                                    name="description"
+                                    th:field="*{description}"
+                                    th:value="${productDTO.description}"
+                                    th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackProductDescription"
+                            >
+                            <span id="descriptionMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('description')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackProductDescription"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--product price div....-->
+                        <div class="mb-3">
+                            <label for="productPrice" class="form-label">Product Price</label>
+                            <input
+                                    type="number"
+                                    id="productPrice"
+                                    name="price"
+                                    min="1"
+                                    th:field="*{price}"
+                                    th:value="${productDTO.price}"
+                                    th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackProductPrice"
+                            >
+                            <span id="priceMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('price')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackProductPrice"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--total product div....-->
+                        <div class="mb-3">
+                            <label for="totalProduct" class="form-label">Total Product</label>
+                            <input
+                                    type="number"
+                                    id="totalProduct"
+                                    name="total"
+                                    min="1"
+                                    th:field="*{total}"
+                                    th:value="${productDTO.total}"
+                                    th:classappend="${#fields.hasErrors('total') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackProductTotal"
+                            >
+                            <span id="totalMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('total')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackProductTotal"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--product discount div....-->
+                        <div class="mb-3">
+                            <label for="discountProduct" class="form-label">Product's Discount</label>
+                            <input
+                                    type="number"
+                                    id="discountProduct"
+                                    name="discount"
+                                    min="0"
+                                    max="100"
+                                    th:field="*{discount}"
+                                    th:value="${productDTO.discount}"
+                                    th:classappend="${#fields.hasErrors('total') ? 'is-invalid' : ''}"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackProductDiscount"
+                            >
+                            <span id="discountMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('discount')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackProductDiscount"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--product image div-->
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Product's Image</label>
+                            <input
+                                    type="file"
+                                    id="productImage"
+                                    name="productImage"
+                                    accept="image/*"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="emailHelp">
+                        </div>
+
+                        <!--student reset & submit div....-->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" onclick="return addProductIsConfirmed()" class="btn btn-success">Add Product</button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
