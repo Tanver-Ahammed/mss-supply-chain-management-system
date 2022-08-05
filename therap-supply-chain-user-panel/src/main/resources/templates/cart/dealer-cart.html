@@ -17,6 +17,9 @@
         <div class="row row-cols-3">
 
             <h1 style="text-align: center">My Product Cart</h1>
+            <div>
+                <p th:text="${message}" style="color: #318043; text-align: center"></p>
+            </div>
             <br>
             <div th:if="${requisitionDTO.requisitionProductHistoryDTOS.isEmpty()}">
                 <td colspan="3"> No Cart is Empty!!</td>
@@ -58,13 +61,13 @@
                 </tbody>
             </table>
 
-            <a th:href="@{${'/dealer/cart/checkout/'}}" type="submit"
-               class="btn btn-primary">Checkout Product Cart
+            <a th:if="${totalItemProduct > 0}" th:href="@{${'/dealer/cart/checkout/'}}" +
+               type="submit" class="btn btn-primary">Checkout Product Cart
             </a>
             &nbsp
             <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
-               th:href=" @{${'/dealer/cart/submit/'}}" type="submit"
-               class="btn btn-success">Checkout Product Cart
+               th:href=" @{${'/dealer/cart/submit/' + requisitionDTO.id}}" type="submit"
+               class="btn btn-success">Submit Product Cart
             </a>
         </div>
     </div>

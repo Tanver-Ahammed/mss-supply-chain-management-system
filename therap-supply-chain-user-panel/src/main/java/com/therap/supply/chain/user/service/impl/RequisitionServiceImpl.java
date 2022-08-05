@@ -42,8 +42,11 @@ public class RequisitionServiceImpl implements RequisitionService {
         Dealer dealer = this.dealerService.getDealer(dealerId);
         Requisition requisition = null;
         requisition = this.requisitionRepository.getByDealerAndIsSubmittedByDealer(dealer, false);
-        if (requisition == null)
-            return null;
+        if (requisition == null) {
+            requisition = new Requisition();
+            requisition.setDealer(dealer);
+            this.requisitionRepository.save(requisition);
+        }
         return this.requisitionToRequisitionDTO(requisition);
     }
 

@@ -9,6 +9,7 @@ import com.therap.supply.chain.user.entities.RequisitionProductHistory;
 import com.therap.supply.chain.user.repository.RequisitionProductHistoryRepository;
 import com.therap.supply.chain.user.repository.RequisitionRepository;
 import com.therap.supply.chain.user.service.DealerProductsCartService;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -140,7 +141,32 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
     @Override
     public Boolean dealerCartFinalSubmit(Long requisitionId) {
         Requisition requisition = this.requisitionService.getRequisition(requisitionId);
-        return null;
+
+        // control stock
+        List<RequisitionProductHistory> requisitionProductHistories =
+                requisition.getRequisitionProductHistories();
+        for (RequisitionProductHistory requisitionProductHistory : requisitionProductHistories) {
+            Long productStock = requisitionProductHistory.getProduct().getStock();
+            Long productQuantityOfDemand = requisitionProductHistory.getQuantity();
+            if (productStock > productQuantityOfDemand)
+                requisitionProductHistory.getProduct().setStock(productStock - productQuantityOfDemand);
+            else {
+                requisitionProductHistory.getProduct().setStock(0L);
+                requisitionProductHistory.setQuantity(productStock);
+            }
+        }
+
+        // requisition set value
+        requisition.setDate(new Date());
+        requisition.setVerificationCode(RandomString.make(6));
+        // set total price
+        Double totalPrice = this.requisitionService
+                .getTotalPriceRequisition(requisition);
+        requisition.setTotalAmountPrice(totalPrice);
+        requisition.setPaidAmount(0.0);
+        requisition.setSubmittedByDealer(true);
+        this.requisitionRepository.save(requisition);
+        return true;
     }
 
 }

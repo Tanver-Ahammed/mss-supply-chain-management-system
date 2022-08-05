@@ -128,9 +128,18 @@ public class DealerProductsCartController {
         return "redirect:/dealer/cart";
     }
 
-    @GetMapping(path = "/submit")
-    public String dealerCartFinalSubmit(@RequestParam("requisitionId") Long requisitionId) {
-        return null;
+    @GetMapping(path = "/submit/{requisitionId}")
+    public String dealerCartFinalSubmit(@PathVariable("requisitionId") Long requisitionId,
+                                        Model model, Principal principal) {
+        if (principal == null)
+            return "dealer/login";
+        DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
+        model.addAttribute("dealer", dealer);
+
+        Boolean isCartSubmitted = this.dealerProductsCartService.dealerCartFinalSubmit(requisitionId);
+        if (isCartSubmitted)
+            model.addAttribute("message", "Your Requisition is Added Successfully...");
+        return "redirect:/dealer/cart";
     }
 
 }
