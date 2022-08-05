@@ -50,7 +50,7 @@ public class HomeController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalProduct", this.requisitionService
+            model.addAttribute("totalItemProduct", this.requisitionService
                     .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "dealer/home";
         }
@@ -131,7 +131,7 @@ public class HomeController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalProduct", this.requisitionService
+            model.addAttribute("totalItemProduct", this.requisitionService
                     .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "dealer/developer";
         }

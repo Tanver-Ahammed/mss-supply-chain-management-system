@@ -45,7 +45,7 @@ public class DealerController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalProduct", this.requisitionService
+            model.addAttribute("totalItemProduct", this.requisitionService
                     .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "dealer/authenticated-registration-dealer";
         }
@@ -89,7 +89,7 @@ public class DealerController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalProduct", this.requisitionService
+            model.addAttribute("totalItemProduct", this.requisitionService
                     .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
             return "dealer/authenticated-registration-dealer";
         }
@@ -104,8 +104,6 @@ public class DealerController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         DealerDTO dealerDTO = this.dealerService.getSingleDealerById(dealer.getId());
 
@@ -113,6 +111,8 @@ public class DealerController {
 
         model.addAttribute("message", "");
         model.addAttribute("dangerMessage", "");
+        model.addAttribute("totalItemProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
         return "dealer/profile-dealer";
     }
 
@@ -126,8 +126,6 @@ public class DealerController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         DealerDTO dealerDTO = this.dealerService.getSingleDealerById(dealer.getId());
 
@@ -135,6 +133,8 @@ public class DealerController {
 
         model.addAttribute("message", "");
         model.addAttribute("dangerMessage", "");
+        model.addAttribute("totalItemProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
         return "dealer/update-dealer";
     }
 
@@ -148,8 +148,6 @@ public class DealerController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         if (result.hasErrors()) {
             model.addAttribute("dealerDTO", dealerDTO);
@@ -158,6 +156,9 @@ public class DealerController {
         dealerDTO = this.dealerService
                 .updateDealer(dealerDTO, dealer.getId(), dealerImage);    // save the dealer database
         model.addAttribute("dealerDTO", new DealerDTO());
+
+        model.addAttribute("totalItemProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
         return "redirect:/home";
     }
 

@@ -1,10 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="dealer/base::layout(~{::section})">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MSS - Supply Chain Management System</title>
 </head>
 <body>
+
+<section>
+
+    <div class="container" style="text-align: center">
+
+        <div class="row row-cols-3">
+            <div class="col-lg-12 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> My Cart Checkout </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{/dealer/cart/checkout/submit/}"
+                          th:object="${requisitionProductHistoryDTOS}" method="post"
+                          enctype="multipart/form-data" onsubmit="return dealerFormValidator()">
+                        <input hidden name="requisitionId" th:value="${requisitionId}">
+                        <fieldset>
+                            <!--dealer name div....-->
+
+
+                            <div th:if="${requisitionProductHistoryDTOS.getRphDTO().size() != '0'}">
+                                <td colspan="3"> Your Cart is Empty!!</td>
+                            </div>
+                            <h1 th:text="${message}"></h1>
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Product Id</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Product Price</th>
+                                    <th scope="col">Product Quantity</th>
+                                    <th scope="col">Total Price</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="table-warning">
+                                <div th:each="requisitionProductHistory, itemStat : *{rphDTO}">
+                                    <tr>
+                                        <input hidden th:field="*{rphDTO[__${itemStat.index}__].id}"/>
+                                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.id}"></th>
+                                        <td th:text="${requisitionProductHistory.productDTO.name}"></td>
+                                        <td th:text="${requisitionProductHistory.price}"></td>
+                                        <td>
+                                            <input
+                                                    type="number"
+                                                    min="0"
+                                                    max="500"
+                                                    step="10"
+                                                    th:field="*{rphDTO[__${itemStat.index}__].quantity}"
+                                            />
+                                        </td>
+                                        <td th:text="${requisitionProductHistory.quantity * requisitionProductHistory.price}"></td>
+                                        <td>
+                                            <a th:href="@{${'/dealer/cart/requisition/' + requisitionId + '/delete/' + requisitionProductHistory.id}}">
+                                                <i class="far fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </div>
+                                <tr class="table-info">
+                                    <td th:colspan="3"><b th:text="${'Total Product & Price'}"></b></td>
+                                    <td><b th:text="${totalProduct}"></b></td>
+                                    <td><b th:text="${totalPrice}"></b></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!--student reset & submit div....-->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                            <button type="reset" class="btn btn-primary">Reset</button>
+                            <button type="submit" onclick="return registrationDealerIsConfirmed()"
+                                    class="btn btn-success">
+                                Checkout And Update
+                            </button>
+                        </fieldset>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
 
 </body>
 </html>

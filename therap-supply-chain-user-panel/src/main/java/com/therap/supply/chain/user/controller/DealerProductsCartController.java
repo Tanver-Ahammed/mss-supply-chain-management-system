@@ -2,6 +2,8 @@ package com.therap.supply.chain.user.controller;
 
 import com.therap.supply.chain.user.dto.DealerDTO;
 import com.therap.supply.chain.user.dto.RequisitionDTO;
+import com.therap.supply.chain.user.dto.RequisitionProductHistoryBindDTO;
+import com.therap.supply.chain.user.dto.RequisitionProductHistoryDTO;
 import com.therap.supply.chain.user.repository.RequisitionRepository;
 import com.therap.supply.chain.user.service.impl.DealerProductsCartServiceImpl;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
@@ -9,9 +11,7 @@ import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -43,11 +43,12 @@ public class DealerProductsCartController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         Boolean isProductAdd = this.dealerProductsCartService
                 .addProductsDealerCart(dealer.getId(), productId);
+
+        model.addAttribute("totalItemProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         return "redirect:/product/all";
     }
@@ -58,12 +59,14 @@ public class DealerProductsCartController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalProduct", this.requisitionService
+        model.addAttribute("totalItemProduct", this.requisitionService
                 .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         model.addAttribute("message", "");
-        RequisitionDTO requisitionDTO = this.requisitionService.getLastRequisitionByDealer(1L);
+        RequisitionDTO requisitionDTO = this.requisitionService.getLastRequisitionByDealer(dealer.getId());
         model.addAttribute("requisitionDTO", requisitionDTO);
+        model.addAttribute("totalProduct",
+                this.requisitionService.getTotalProductRequisition(requisitionDTO));
         return "cart/dealer-cart";
     }
 
@@ -78,7 +81,7 @@ public class DealerProductsCartController {
 
         this.dealerProductsCartService.deleteProductFromDealerCart(requisitionId, rphId);
 
-        model.addAttribute("totalProduct", this.requisitionService
+        model.addAttribute("totalItemProduct", this.requisitionService
                 .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         return "redirect:/dealer/cart";
@@ -90,13 +93,44 @@ public class DealerProductsCartController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalProduct", this.requisitionService
+        model.addAttribute("totalItemProduct", this.requisitionService
                 .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
 
         model.addAttribute("message", "");
-        model.addAttribute("requisition", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()));
+        RequisitionDTO requisitionDTO = this.requisitionService.
+                getLastRequisitionByDealer(dealer.getId());
+        RequisitionProductHistoryBindDTO historyBindDTOS = new RequisitionProductHistoryBindDTO();
+        for (RequisitionProductHistoryDTO productHistoryDTO : requisitionDTO.getRequisitionProductHistoryDTOS()) {
+            historyBindDTOS.addRequisitionProductHistoryDTO(productHistoryDTO);
+        }
+
+        model.addAttribute("requisitionProductHistoryDTOS", historyBindDTOS);
+        model.addAttribute("totalProduct", this.requisitionService.getTotalProductRequisition(requisitionDTO));
+        model.addAttribute("totalPrice", requisitionDTO.getTotalAmountPrice());
+        model.addAttribute("requisitionId", requisitionDTO.getId());
         return "cart/cart-checkout";
+    }
+
+    @PostMapping(path = "checkout/submit")
+    public String dealerProductCartCheckoutSubmit(@ModelAttribute("requisitionDTO")
+                                                  RequisitionProductHistoryBindDTO historyBindDTO,
+                                                  @RequestParam("requisitionId") Long requisitionId,
+                                                  Model model, Principal principal) {
+        if (principal == null)
+            return "dealer/login";
+        DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
+        model.addAttribute("dealer", dealer);
+
+        System.out.println(requisitionId);
+        this.dealerProductsCartService.checkoutCart(historyBindDTO, requisitionId);
+        model.addAttribute("totalItemProduct", this.requisitionService
+                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        return "redirect:/dealer/cart";
+    }
+
+    @GetMapping(path = "/submit")
+    public String dealerCartFinalSubmit(@RequestParam("requisitionId") Long requisitionId) {
+        return null;
     }
 
 }

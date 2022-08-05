@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +57,15 @@ public class RequisitionServiceImpl implements RequisitionService {
                 .sum();
     }
 
+    public Long getTotalProductRequisition(RequisitionDTO requisitionDTO) {
+        return requisitionDTO
+                .getRequisitionProductHistoryDTOS()
+                .stream()
+                .filter(rphDTO -> !rphDTO.isDeleted())
+                .mapToLong(RequisitionProductHistoryDTO::getQuantity)
+                .sum();
+    }
+
     // get requisition
     public Requisition getRequisition(Long requisitionId) {
         return this.requisitionRepository.findById(requisitionId).orElseThrow(() ->
@@ -64,9 +75,13 @@ public class RequisitionServiceImpl implements RequisitionService {
     // requisition to requisitionDTO
     public RequisitionDTO requisitionToRequisitionDTO(Requisition requisition) {
         requisition.setRequisitionProductHistories(requisition
-                .getRequisitionProductHistories().stream()
-                .filter(rph -> !rph.isDeleted()).collect(Collectors.toList())
+                .getRequisitionProductHistories()
+                .stream()
+                .filter(rph -> !rph.isDeleted())
+                .sorted(Comparator.comparingLong(RequisitionProductHistory::getId))
+                .collect(Collectors.toList())
         );
+
         RequisitionDTO requisitionDTO = this.modelMapper.map(requisition, RequisitionDTO.class);
         requisitionDTO.setDealerDTO(this.modelMapper.map(requisition.getDealer(), DealerDTO.class));
         requisitionDTO.getDealerDTO().setPassword(null);
@@ -83,6 +98,7 @@ public class RequisitionServiceImpl implements RequisitionService {
 
         requisitionDTO.setPaymentHistoryDTOS(requisition.getPaymentHistories().stream()
                 .map(paymentHistory -> this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class))
+                .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))
                 .collect(Collectors.toList()));
         return requisitionDTO;
     }

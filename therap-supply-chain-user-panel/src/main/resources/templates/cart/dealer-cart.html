@@ -50,17 +50,22 @@
                     </tr>
                 </div>
                 <tr class="table-info">
-                    <td th:colspan="4"><b th:text="${'Total Price'}"></b></td>
+                    <td th:colspan="3"><b th:text="${'Total Product & Price'}"></b></td>
+                    <td><b th:text="${totalProduct}"></b></td>
                     <td><b th:text="${requisitionDTO.totalAmountPrice}"></b></td>
                     <td></td>
                 </tr>
                 </tbody>
             </table>
-            <div>
-                <a th:href="@{${'/dealer/cart/checkout/'}}" type="submit"
-                   class="btn btn-success">Checkout Product Cart
-                </a>
-            </div>
+
+            <a th:href="@{${'/dealer/cart/checkout/'}}" type="submit"
+               class="btn btn-primary">Checkout Product Cart
+            </a>
+            &nbsp
+            <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
+               th:href=" @{${'/dealer/cart/submit/'}}" type="submit"
+               class="btn btn-success">Checkout Product Cart
+            </a>
         </div>
     </div>
 
