@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 public class Authority {
 
     @Id

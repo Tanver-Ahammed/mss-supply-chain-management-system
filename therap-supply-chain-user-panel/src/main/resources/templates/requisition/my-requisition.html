@@ -16,7 +16,10 @@
     <div class="container" style="text-align: center">
         <div class="row row-cols-3">
 
-            <h1 style="text-align: center">My Product Cart</h1>
+            <h1 style="text-align: center">
+                <b th:text="${'REQ-' + requisitionDTO.id}">
+                </b>
+            </h1>
             <div>
                 <p th:text="${message}" style="color: #318043; text-align: center"></p>
             </div>
@@ -33,7 +36,6 @@
                     <th scope="col">Product Price</th>
                     <th scope="col">Product Quantity</th>
                     <th scope="col">Total Price</th>
-                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody class="table-warning">
@@ -51,18 +53,12 @@
                         <td th:text="${requisitionProductHistory.quantity}"></td>
                         <td th:text="${requisitionProductHistory.quantity *
                             requisitionProductHistory.price}"></td>
-                        <td>
-                            <a th:href="@{${'/dealer/cart/requisition/' + requisitionDTO.id + '/delete/' + requisitionProductHistory.id}}">
-                                <i class="far fa-solid fa-trash"></i>
-                            </a>
-                        </td>
                     </tr>
                 </div>
                 <tr class="table-info">
                     <td th:colspan="3"><b th:text="${'Total Product & Price'}"></b></td>
                     <td><b th:text="${totalProduct}"></b></td>
                     <td><b th:text="${requisitionDTO.totalAmountPrice}"></b></td>
-                    <td></td>
                 </tr>
                 </tbody>
             </table>

@@ -1,5 +1,6 @@
 package com.therap.supply.chain.user.service.impl;
 
+import com.therap.supply.chain.user.config.AppConstants;
 import com.therap.supply.chain.user.dto.RequisitionProductHistoryBindDTO;
 import com.therap.supply.chain.user.dto.RequisitionProductHistoryDTO;
 import com.therap.supply.chain.user.entities.Dealer;
@@ -165,6 +166,9 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
         requisition.setTotalAmountPrice(totalPrice);
         requisition.setPaidAmount(0.0);
         requisition.setSubmittedByDealer(true);
+        requisition.setIsApproveByInventoryManager(AppConstants.pause);
+        requisition.setIsApproveByAccountManager(AppConstants.pause);
+        requisition.setIsDelivered(AppConstants.pause);
         this.requisitionRepository.save(requisition);
         return true;
     }

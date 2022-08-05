@@ -1,12 +1,11 @@
-package com.therap.supply.chain.user.service.impl;
+package com.therap.supply.chain.admin.service.impl;
 
-import com.therap.supply.chain.user.dto.*;
-import com.therap.supply.chain.user.entities.Dealer;
-import com.therap.supply.chain.user.entities.Requisition;
-import com.therap.supply.chain.user.entities.RequisitionProductHistory;
-import com.therap.supply.chain.user.exception.ResourceNotFoundException;
-import com.therap.supply.chain.user.repository.RequisitionRepository;
-import com.therap.supply.chain.user.service.RequisitionService;
+import com.therap.supply.chain.admin.dto.*;
+import com.therap.supply.chain.admin.entities.Requisition;
+import com.therap.supply.chain.admin.entities.RequisitionProductHistory;
+import com.therap.supply.chain.admin.exception.ResourceNotFoundException;
+import com.therap.supply.chain.admin.repository.RequisitionRepository;
+import com.therap.supply.chain.admin.service.RequisitionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @Author: Md. Tanver Ahammed,
- * ICT, MBSTU
- */
-
 @Service
 public class RequisitionServiceImpl implements RequisitionService {
 
@@ -28,54 +22,23 @@ public class RequisitionServiceImpl implements RequisitionService {
     private RequisitionRepository requisitionRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private DealerServiceImpl dealerService;
-
-    @Autowired
     private ProductServiceImpl productService;
 
-    @Override
-    public List<RequisitionDTO> getAllRequisitionByDealer(Long dealerId) {
-        Dealer dealer = this.dealerService.getDealer(dealerId);
-        return this.requisitionRepository
-                .findByDealer(dealer)
-                .stream()
-                .map(requisition -> this.modelMapper.map(requisition, RequisitionDTO.class))
-                .filter(RequisitionDTO::isSubmittedByDealer)
-                .sorted(Comparator.comparingLong(RequisitionDTO::getId))
-                .collect(Collectors.toList());
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
-    public RequisitionDTO getRequisitionById(Long requisitionId) {
+    public RequisitionDTO getSingleRequisitionById(Long requisitionId) {
         return this.requisitionToRequisitionDTO(this.getRequisition(requisitionId));
     }
 
-    @Override
-    public RequisitionDTO getLastRequisitionByDealer(Long dealerId) {
-        Dealer dealer = this.dealerService.getDealer(dealerId);
-        Requisition requisition = null;
-        requisition = this.requisitionRepository.getByDealerAndIsSubmittedByDealer(dealer, false);
-        if (requisition == null) {
-            requisition = new Requisition();
-            requisition.setDealer(dealer);
-            this.requisitionRepository.save(requisition);
-        }
-        return this.requisitionToRequisitionDTO(requisition);
+    // get requisition
+    public Requisition getRequisition(Long requisitionId) {
+        return this.requisitionRepository.findById(requisitionId).orElseThrow(() ->
+                new ResourceNotFoundException("Requisition", "id", requisitionId));
     }
 
-    @Override
-    public Double getTotalPriceRequisition(Requisition requisition) {
-        return requisition
-                .getRequisitionProductHistories()
-                .stream()
-                .filter(rph -> !rph.isDeleted())
-                .mapToDouble(rph -> rph.getQuantity() * rph.getPrice())
-                .sum();
-    }
-
+    // get total product a requisition
     public Long getTotalProductRequisition(RequisitionDTO requisitionDTO) {
         return requisitionDTO
                 .getRequisitionProductHistoryDTOS()
@@ -83,12 +46,6 @@ public class RequisitionServiceImpl implements RequisitionService {
                 .filter(rphDTO -> !rphDTO.isDeleted())
                 .mapToLong(RequisitionProductHistoryDTO::getQuantity)
                 .sum();
-    }
-
-    // get requisition
-    public Requisition getRequisition(Long requisitionId) {
-        return this.requisitionRepository.findById(requisitionId).orElseThrow(() ->
-                new ResourceNotFoundException("Requisition", "id", requisitionId));
     }
 
     // requisition to requisitionDTO
@@ -121,6 +78,5 @@ public class RequisitionServiceImpl implements RequisitionService {
                 .collect(Collectors.toList()));
         return requisitionDTO;
     }
-
 
 }

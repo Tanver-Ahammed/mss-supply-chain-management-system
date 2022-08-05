@@ -130,4 +130,12 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "Id", productId));
     }
 
+    // product to productDTO
+    public ProductDTO productToProductDTO(Product product) {
+        ProductDTO productDTO = this.modelMapper.map(product, ProductDTO.class);
+        AttachmentDTO attachmentDTO = this.attachmentService.attachmentToAttachmentDTO(product.getAttachment());
+        productDTO.setAttachmentDTO(attachmentDTO);
+        return productDTO;
+    }
+
 }

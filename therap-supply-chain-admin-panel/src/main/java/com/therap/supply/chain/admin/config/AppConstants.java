@@ -17,10 +17,13 @@ public class AppConstants {
 
     public static final String inactive = "INACTIVE";
 
+    public static final String cancel = "CANCEL";
+
     public static final String accept = "ACCEPT";
 
     public static final String pause = "PAUSE";
 
-    public static final String cancel = "CANCEL";
+    public static final String reject = "REJECT";
+
 
 }

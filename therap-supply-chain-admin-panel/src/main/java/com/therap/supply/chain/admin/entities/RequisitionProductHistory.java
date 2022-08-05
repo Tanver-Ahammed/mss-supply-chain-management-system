@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 public class RequisitionProductHistory {
 
     @Id

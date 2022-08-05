@@ -29,3 +29,19 @@ footer {
 .far {
     color: red;
 }
+
+.fab {
+    color: blue;
+}
+
+.fag {
+    color: green;
+}
+
+i .fa {
+    font-size: 30px;
+}
+
+th, td {
+    text-align: center;
+}

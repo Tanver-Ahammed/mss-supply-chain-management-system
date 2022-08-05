@@ -28,7 +28,7 @@
                             <!--dealer name div....-->
 
 
-                            <div th:if="${requisitionProductHistoryDTOS.getRphDTO().size() != '0'}">
+                            <div th:if="${requisitionProductHistoryDTOS.getRphDTO().size() == 0}">
                                 <td colspan="3"> Your Cart is Empty!!</td>
                             </div>
                             <h1 th:text="${message}"></h1>
@@ -76,13 +76,11 @@
                                 </tbody>
                             </table>
 
-                            <!--student reset & submit div....-->
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
-                            <button type="reset" class="btn btn-primary">Reset</button>
-                            <button type="submit" onclick="return registrationDealerIsConfirmed()"
+                            <button th:if="${requisitionProductHistoryDTOS.getRphDTO().size() > 0}"
+                                    type="reset" class="btn btn-primary">Reset
+                            </button>
+                            <button th:if="${requisitionProductHistoryDTOS.getRphDTO().size() > 0}"
+                                    type="submit" onclick="return registrationDealerIsConfirmed()"
                                     class="btn btn-success">
                                 Checkout And Update
                             </button>

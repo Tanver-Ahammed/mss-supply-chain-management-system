@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 public class Requisition {
 
     @Id

@@ -1,6 +1,7 @@
 package com.therap.supply.chain.admin.service.impl;
 
 import com.therap.supply.chain.admin.dto.AttachmentDTO;
+import com.therap.supply.chain.admin.entities.Attachment;
 import com.therap.supply.chain.admin.repository.AttachmentRepository;
 import com.therap.supply.chain.admin.service.AttachmentService;
 import org.apache.commons.io.FilenameUtils;
@@ -73,4 +74,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 
         return attachmentDTO;
     }
+
+    // attachment to attachmentDTO
+    public AttachmentDTO attachmentToAttachmentDTO(Attachment attachment) {
+        return this.modelMapper.map(attachment, AttachmentDTO.class);
+    }
+
 }
