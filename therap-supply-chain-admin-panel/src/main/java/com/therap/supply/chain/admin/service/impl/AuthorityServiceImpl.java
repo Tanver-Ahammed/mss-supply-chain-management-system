@@ -3,6 +3,7 @@ package com.therap.supply.chain.admin.service.impl;
 import com.therap.supply.chain.admin.config.AppConstants;
 import com.therap.supply.chain.admin.dto.AttachmentDTO;
 import com.therap.supply.chain.admin.dto.AuthorityDTO;
+import com.therap.supply.chain.admin.dto.ProductDTO;
 import com.therap.supply.chain.admin.dto.RoleDTO;
 import com.therap.supply.chain.admin.email.EmailSenderService;
 import com.therap.supply.chain.admin.entities.Attachment;
@@ -160,7 +161,10 @@ public class AuthorityServiceImpl implements AuthorityService {
             AuthorityDTO authorityDTO = authorityToAuthorityDTO(authority);
             authorityDTOS.add(authorityDTO);
         }
-        return authorityDTOS;
+        return authorityDTOS
+                .stream()
+                .sorted(Comparator.comparingLong(AuthorityDTO::getId))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -168,6 +172,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         return getAllAuthorities()
                 .stream()
                 .filter(dealerDTO -> Objects.equals(dealerDTO.getActivity(), activationStatus))
+                .sorted(Comparator.comparingLong(AuthorityDTO::getId))
                 .collect(Collectors.toList());
     }
 
@@ -185,7 +190,10 @@ public class AuthorityServiceImpl implements AuthorityService {
                 }
             }
         }
-        return authorityDTOS;
+        return authorityDTOS
+                .stream()
+                .sorted(Comparator.comparingLong(AuthorityDTO::getId))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.therap.supply.chain.admin.service.impl;
 
 import com.therap.supply.chain.admin.config.AppConstants;
 import com.therap.supply.chain.admin.dto.AttachmentDTO;
+import com.therap.supply.chain.admin.dto.AuthorityDTO;
 import com.therap.supply.chain.admin.dto.DealerDTO;
 import com.therap.supply.chain.admin.email.EmailSenderService;
 import com.therap.supply.chain.admin.entities.Dealer;
@@ -19,6 +20,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -76,7 +78,10 @@ public class DealerServiceImpl implements DealerService {
             dealerDTO.setAttachmentDTOS(attachmentDTOS);
             dealerDTOS.add(dealerDTO);
         }
-        return dealerDTOS;
+        return dealerDTOS
+                .stream()
+                .sorted(Comparator.comparingLong(DealerDTO::getId))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -84,6 +89,7 @@ public class DealerServiceImpl implements DealerService {
         return getAllDealers()
                 .stream()
                 .filter(dealerDTO -> Objects.equals(dealerDTO.getIsActiveByDealerApprover(), activationStatus))
+                .sorted(Comparator.comparingLong(DealerDTO::getId))
                 .collect(Collectors.toList());
     }
 

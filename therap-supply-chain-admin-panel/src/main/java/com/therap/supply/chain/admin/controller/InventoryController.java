@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/authority/inventory")
+@RequestMapping(path = "/inventory")
 public class InventoryController {
 
     @Autowired
@@ -53,7 +53,7 @@ public class InventoryController {
 
         Boolean isApproveByInventory = this.inventoryRequisitionService.
                 isApproveRequisitionStatusByInventory(requisitionId, inventoryStatus);
-        return "redirect:/authority/inventory/requisitions";
+        return "redirect:/inventory/requisitions";
     }
 
 

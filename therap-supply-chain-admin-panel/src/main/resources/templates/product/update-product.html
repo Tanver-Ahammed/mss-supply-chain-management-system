@@ -19,7 +19,7 @@
                 <div class="card-body">
 
                     <!--blood donor form started....-->
-                    <form th:action="@{${'/product/update/' + productDTO.id}}" th:object="${productDTO}" method="post"
+                    <form th:action="@{${'/inventory/product/update/' + productDTO.id}}" th:object="${productDTO}" method="post"
                           enctype="multipart/form-data" onsubmit="return productFormValidator()">
 
                         <!--product name div....-->

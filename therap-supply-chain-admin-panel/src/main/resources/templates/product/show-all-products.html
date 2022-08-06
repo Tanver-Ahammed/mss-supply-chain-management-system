@@ -16,7 +16,7 @@
             </div>
             <div th:each="productDTO : ${productDTOS}">
                 <div class="card" style="width: 18rem; height: 30rem;">
-                    <img th:src="@{${'/product/image/' + productDTO.getAttachmentDTO().getAttachmentFileName()}}"
+                    <img th:src="@{${'/inventory/product/image/' + productDTO.getAttachmentDTO().getAttachmentFileName()}}"
                          height="250" width="150"
                          class="card-img-top" alt="Not Available Image">
                     <div class="card-body">
@@ -24,7 +24,7 @@
                         <p class="card-text" th:text="${'Product Description: ' + productDTO.description}"></p>
                         <p class="card-text" th:text="${'Product Price: ' + productDTO.price}"></p>
                         <p class="card-text" th:text="${'Stock of Product: ' + productDTO.stock}"></p>
-                        <a th:href="@{${'/product/get/' + productDTO.id}}" class="btn btn-success">Details</a>
+                        <a th:href="@{${'/inventory/product/get/' + productDTO.id}}" class="btn btn-success">Details</a>
                         <a href="#" class="btn btn-success">Add Cart</a>
                     </div>
                 </div>

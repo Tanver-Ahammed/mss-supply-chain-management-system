@@ -17,8 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Md. Tanver Ahammed,
@@ -92,7 +94,10 @@ public class ProductServiceImpl implements ProductService {
 //                .stream()
 //                .map(product -> this.modelMapper.map(product, ProductDTO.class))
 //                .collect(Collectors.toList());
-        return productDTOS;
+        return productDTOS
+                .stream()
+                .sorted(Comparator.comparingLong(ProductDTO::getId))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -43,7 +43,13 @@
                                 </a>
                             </b>
                         </th>
-                        <td th:text="${requisitionDTO.dealerDTO.name}"></td>
+                        <td>
+                            <b>
+                                <a th:href="@{${'/dealer/get/' + requisitionDTO.dealerDTO.id}}"
+                                   th:text="${requisitionDTO.dealerDTO.name}">
+                                </a>
+                            </b>
+                        </td>
                         <td th:text="${requisitionDTO.date}"></td>
                         <td th:text="${requisitionDTO.totalAmountPrice}"></td>
                     </tr>

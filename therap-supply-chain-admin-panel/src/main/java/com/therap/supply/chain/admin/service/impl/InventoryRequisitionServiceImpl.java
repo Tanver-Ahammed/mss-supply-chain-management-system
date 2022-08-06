@@ -64,7 +64,7 @@ public class InventoryRequisitionServiceImpl implements InventoryRequisitionServ
         } else {
             subject = "Sorry, Your Requisition is Rejected by Inventory";
             emailContent += "Your Requisition is Unfortunately Rejected by Inventory.<br>" +
-                    "Please, Contact with Inventory Department";
+                    "Please, Contact with Inventory Department.<br>";
         }
 
         emailContent += "Thank you,<br> " +

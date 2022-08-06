@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(path = "/product")
+@RequestMapping(path = "/inventory/product")
 public class ProductController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class ProductController {
     @GetMapping(path = "/add")
     public String addProduct(Model model, Principal principal) {
         // get logged-in username
-        if (principal    == null)
+        if (principal == null)
             return "authority/login";
         AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
@@ -154,7 +154,7 @@ public class ProductController {
         }
         productDTO = this.productService.updateProduct(productId, productDTO, productImage);    // save the product database
         model.addAttribute("productDTO", new ProductDTO());
-        return "redirect:/product/all";
+        return "redirect:/inventory/product/all/";
     }
 
     // get image

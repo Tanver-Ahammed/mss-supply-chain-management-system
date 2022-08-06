@@ -64,11 +64,11 @@
             </table>
 
             <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
-               th:href=" @{${'/authority/inventory/requisition/accept/' + requisitionDTO.id}}"
+               th:href=" @{${'/inventory/requisition/accept/' + requisitionDTO.id}}"
                type="submit" class="btn btn-success">Accept Requisition
             </a>
             <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
-               th:href=" @{${'/authority/inventory/requisition/reject/' + requisitionDTO.id}}"
+               th:href=" @{${'/inventory/requisition/reject/' + requisitionDTO.id}}"
                type="submit" class="btn btn-danger">Reject Requisition
             </a>
         </div>

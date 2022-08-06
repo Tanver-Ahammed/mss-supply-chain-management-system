@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/authority/account")
+@RequestMapping(path = "/account")
 public class AccountController {
 
     @Autowired

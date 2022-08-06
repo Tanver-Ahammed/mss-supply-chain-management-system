@@ -46,8 +46,15 @@
                         Inventory
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownInventory">
-                        <li><a class="dropdown-item" th:href="@{/product/add}">Add Product</a></li>
-                        <li><a class="dropdown-item" th:href="@{/product/all}">All Product</a></li>
+                        <li><a class="dropdown-item" th:href="@{/inventory/product/add}">Add Product</a></li>
+                        <li><a class="dropdown-item" th:href="@{/inventory/product/all}">All Product</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/inventory/requisitions}">Requisitions For Approve</a>
+                        </li>
+
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -65,7 +72,11 @@
                         Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
-                        <li><a class="dropdown-item" th:href="@{#}">Account</a></li>
+                        <li><a class="dropdown-item" th:href="@{/account/requisitions}">Requisition For Approve</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/account/payment/histrory}">Payment For Approve</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">

@@ -18,14 +18,22 @@ footer {
 
 .far {
     color: red;
+    font-size: 30px;
 }
 
 .fab {
     color: blue;
+    font-size: 30px;
 }
 
 .fag {
     color: green;
+    font-size: 30px;
+}
+
+.fay {
+    color: indigo;
+    font-size: 30px;
 }
 
 i .fa {
