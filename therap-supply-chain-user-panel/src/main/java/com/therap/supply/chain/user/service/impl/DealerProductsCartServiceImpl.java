@@ -145,7 +145,11 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
 
         // control stock
         List<RequisitionProductHistory> requisitionProductHistories =
-                requisition.getRequisitionProductHistories();
+                requisition.getRequisitionProductHistories()
+                        .stream()
+                        .filter(rph -> !rph.isDeleted())
+                        .sorted(Comparator.comparingLong(RequisitionProductHistory::getId))
+                        .collect(Collectors.toList());
         for (RequisitionProductHistory requisitionProductHistory : requisitionProductHistories) {
             Long productStock = requisitionProductHistory.getProduct().getStock();
             Long productQuantityOfDemand = requisitionProductHistory.getQuantity();

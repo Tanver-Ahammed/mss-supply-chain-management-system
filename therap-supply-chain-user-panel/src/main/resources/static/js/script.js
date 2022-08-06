@@ -54,6 +54,21 @@ function dealerFormValidator() {
     }
 }
 
+function amountFormValidator() {
+    let totalAmountOfRest = document.getElementById("totalAmountOfRest").value;
+    let amount = document.getElementById("amount").value;
+
+    console.log(totalAmountOfRest);
+    console.log(amount);
+
+    if (amount < totalAmountOfRest) {
+        document.getElementById("amountMessage").innerHTML = "**your rest amount is only " + totalAmountOfRest + "...";
+        console.log("Tanver");
+        return false;
+    }
+
+}
+
 function registrationDealerIsConfirmed() {
     let confirmAction = confirm("Are you want to Registration?");
     if (confirmAction) {

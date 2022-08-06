@@ -42,8 +42,10 @@ public class InventoryRequisitionServiceImpl implements InventoryRequisitionServ
         Requisition requisition = this.requisitionService.getRequisition(requisitionId);
         if (inventoryStatus.equalsIgnoreCase(AppConstants.accept))
             requisition.setIsApproveByInventoryManager(AppConstants.accept);
-        else if (inventoryStatus.equalsIgnoreCase(AppConstants.reject))
+        else if (inventoryStatus.equalsIgnoreCase(AppConstants.reject)) {
             requisition.setIsApproveByInventoryManager(AppConstants.reject);
+            requisition = this.requisitionService.recoveryStockFromRequisition(requisition);
+        }
         this.requisitionRepository.save(requisition);
         this.sendVerificationEmail(requisition, AppConstants.userPanelHost);
         return true;

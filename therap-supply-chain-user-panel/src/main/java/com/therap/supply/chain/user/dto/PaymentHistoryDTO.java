@@ -26,9 +26,12 @@ public class PaymentHistoryDTO {
     // bank acc no, bkash no, accountant/delivery manager name
     private String accountNo;
 
+    // transactionId, delivery manager id
     private String transactionId;
 
     private Double amount;
+
+    private boolean isApproveByAccountManager;
 
     private RequisitionDTO requisitionDTO;
 

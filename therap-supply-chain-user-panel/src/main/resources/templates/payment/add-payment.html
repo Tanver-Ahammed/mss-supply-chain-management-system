@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="dealer/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Add New Dealer </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{${'/dealer/payment/save/' + requisitionId}}"
+                          th:object="${paymentHistoryDTO}" method="post"
+                          onsubmit="return amountFormValidator()">
+
+                        <!--payment medium div....-->
+                        <div class=" mb-3">
+                            <label for="paymentMedium" class="form-label">Payment Medium</label>
+                            <select
+                                    class="form-select"
+                                    type="text"
+                                    id="paymentMedium"
+                                    name="bloodGroupName"
+                                    th:field="*{medium}"
+                                    th:value="${paymentHistoryDTO.medium}"
+                                    th:classappend="${#fields.hasErrors('medium') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    aria-label="Default select example"
+                                    aria-describedby="validationServer03FeedbackAuthorityEmail"
+                            >
+                                <!--<option selected>Open this select menu</option>-->
+                                <option value="Sonali Bank">Sonali Bank</option>
+                                <option value="Krishi Bank">Krisi Bank</option>
+                                <option value="Agrani Bank">Agrani Bank</option>
+                                <option value="Delivery Manager">Delivery Manager (Manually)</option>
+                                <option value="bKash">bKash</option>
+                                <option value="Nagad">Nagad</option>
+                                <option value="Rocket">Rocket</option>
+                            </select>
+                            <span id="mediumMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('medium')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAuthorityBloodGroup"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--dealer accountNo div....-->
+                        <div class="mb-3">
+                            <label for="accountNo" class="form-label">Account No / Delivery Manager Name</label>
+                            <input
+                                    type="text"
+                                    id="accountNo"
+                                    name="accountNo"
+                                    th:field="*{accountNo}"
+                                    th:value="${paymentHistoryDTO.accountNo}"
+                                    th:classappend="${#fields.hasErrors('accountNo') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackStudentId"
+                            >
+                            <span id="accountNoMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('accountNo')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackDealerName"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--payment transactionId div....-->
+                        <div class="mb-3">
+                            <label for="transactionId" class="form-label">Transaction Id / Delivery Manager Id</label>
+                            <input
+                                    type="text"
+                                    id="transactionId"
+                                    name="transactionId"
+                                    th:field="*{transactionId}"
+                                    th:value="${paymentHistoryDTO.transactionId}"
+                                    th:classappend="${#fields.hasErrors('transactionId') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackTransactionId"
+                            >
+                            <span id="transactionIdMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('transactionId')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackTransactionId"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <!--payment amount div....-->
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input
+                                    hidden
+                                    id="restAmount"
+                                    th:value="${totalAmountOfRest}"
+                            >
+                            <input
+                                    type="number"
+                                    id="amount"
+                                    name="transactionId"
+                                    th:field="*{amount}"
+                                    th:value="${paymentHistoryDTO.amount}"
+                                    min="0"
+                                    th:classappend="${#fields.hasErrors('amount') ? 'is-invalid' : ''}"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackTransactionId"
+                            >
+                            <span id="amountMessage" style="color: red"></span>
+                            <div
+                                    th:each="e : ${#fields.errors('amount')}"
+                                    th:text="${e}"
+                                    id="validationServer03FeedbackAmount"
+                                    class="invalid-feedback">
+                            </div>
+                        </div>
+
+
+                        <!--student reset & submit div....-->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" onclick="return registrationDealerIsConfirmed()" class="btn btn-success">
+                            Registration
+                        </button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

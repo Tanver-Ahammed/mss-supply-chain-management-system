@@ -48,6 +48,23 @@ public class RequisitionServiceImpl implements RequisitionService {
                 .sum();
     }
 
+    // if reject requisition recovery stock
+    public Requisition recoveryStockFromRequisition(Requisition requisition) {
+        // control stock
+        List<RequisitionProductHistory> requisitionProductHistories =
+                requisition.getRequisitionProductHistories()
+                        .stream()
+                        .filter(rph -> !rph.isDeleted())
+                        .sorted(Comparator.comparingLong(RequisitionProductHistory::getId))
+                        .collect(Collectors.toList());
+        for (RequisitionProductHistory requisitionProductHistory : requisitionProductHistories) {
+            Long productStock = requisitionProductHistory.getProduct().getStock();
+            Long productQuantityOfDemand = requisitionProductHistory.getQuantity();
+            requisitionProductHistory.getProduct().setStock(productStock + productQuantityOfDemand);
+        }
+        return requisition;
+    }
+
     // requisition to requisitionDTO
     public RequisitionDTO requisitionToRequisitionDTO(Requisition requisition) {
         requisition.setRequisitionProductHistories(requisition

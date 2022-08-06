@@ -142,7 +142,7 @@
                             </select>
                             <span id="BloodGroupMessage" style="color: red"></span>
                             <div
-                                    th:each="e : ${#fields.errors('email')}"
+                                    th:each="e : ${#fields.errors('bloodGroup')}"
                                     th:text="${e}"
                                     id="validationServer03FeedbackAuthorityBloodGroup"
                                     class="invalid-feedback">
@@ -221,7 +221,9 @@
                             <label class="form-check-label" for="exampleCheck1">Check me out</label>
                         </div>
                         <button type="reset" class="btn btn-primary">Reset</button>
-                        <button type="submit" onclick="return registrationAuthorityIsConfirmed()" class="btn btn-success">Registration</button>
+                        <button type="submit" onclick="return registrationAuthorityIsConfirmed()"
+                                class="btn btn-success">Registration
+                        </button>
                     </form>
                     <!--blood donor form started....-->
 

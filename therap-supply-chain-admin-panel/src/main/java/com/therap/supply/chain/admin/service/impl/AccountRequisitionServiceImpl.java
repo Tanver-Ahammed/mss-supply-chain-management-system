@@ -36,8 +36,10 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
         Requisition requisition = this.requisitionService.getRequisition(requisitionId);
         if (accountStatus.equalsIgnoreCase(AppConstants.accept))
             requisition.setIsApproveByAccountManager(AppConstants.accept);
-        else if (accountStatus.equalsIgnoreCase(AppConstants.reject))
+        else if (accountStatus.equalsIgnoreCase(AppConstants.reject)) {
             requisition.setIsApproveByAccountManager(AppConstants.reject);
+            requisition = this.requisitionService.recoveryStockFromRequisition(requisition);
+        }
         this.requisitionRepository.save(requisition);
         return true;
     }

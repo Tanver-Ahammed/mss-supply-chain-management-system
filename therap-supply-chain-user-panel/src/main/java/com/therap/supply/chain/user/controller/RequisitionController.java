@@ -29,7 +29,7 @@ public class RequisitionController {
     @Autowired
     private DealerServiceImpl dealerService;
 
-    @GetMapping
+    @GetMapping(path = "/all")
     public String getAllRequisitionByDealer(Model model, Principal principal) {
         // get logged-in username
         if (principal == null)
@@ -49,7 +49,7 @@ public class RequisitionController {
 
     @GetMapping(path = "/{requisitionId}")
     public String getRequisitionByDealer(@PathVariable("requisitionId") Long requisitionId,
-                                            Model model, Principal principal) {
+                                         Model model, Principal principal) {
         // get logged-in username
         if (principal == null)
             return "dealer/login";

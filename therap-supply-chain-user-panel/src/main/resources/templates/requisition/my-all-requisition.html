@@ -31,6 +31,8 @@
                     <th scope="col">Requisition Id</th>
                     <th scope="col">Requisition Date</th>
                     <th scope="col">Total Price</th>
+                    <th scope="col">Paid Amount</th>
+                    <th scope="col">Paid History</th>
                     <th scope="col">Paid Status</th>
                 </tr>
                 </thead>
@@ -46,15 +48,24 @@
                         </th>
                         <td th:text="${requisitionDTO.date}"></td>
                         <td th:text="${requisitionDTO.totalAmountPrice}"></td>
+                        <td th:text="${requisitionDTO.paidAmount}"></td>
                         <td>
-                            <span th:if="${requisitionDTO.paid == true}">
-                                <i class="fag fa-solid fa-check"></i>
-                            </span>
-                            <span th:if="${requisitionDTO.paid == false}">
-                                <a th:href="@{/dealer/payment/}">
-                                    <i class="far fa-solid fa-xmark"></i>
-                                </a>
-                            </span>
+                            <a th:href="@{${'/dealer/payment/requisition/by/' + requisitionDTO.id}}"
+                               th:text="${'Show'}"
+                               class="btn btn-primary">
+                            </a>
+                        </td>
+                        <td>
+                            <a th:if="${requisitionDTO.paid == true}"
+                               th:href="@{#}"
+                               th:text="${'Paid'}"
+                               class="btn btn-success">
+                            </a>
+                            <a th:if="${requisitionDTO.paid == false}"
+                               th:href="@{${'/dealer/payment/requisition/' + requisitionDTO.id}}"
+                               th:text="${'Click For Payment'}"
+                               class="btn btn-danger">
+                            </a>
                         </td>
                     </tr>
                 </div>
