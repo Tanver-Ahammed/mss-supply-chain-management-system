@@ -15,8 +15,8 @@
             <h1 style="text-align: center">Product Details</h1>
 
             <div class="card" style="width: 40rem; text-align: center">
-                <img th:src="@{${'/invenroty/product/image/' + productDTO.getAttachmentDTO().getAttachmentFileName()}}"
-                     class="single-card-img-top" alt="Not Available Image">
+                <img th:src="@{${'/dealer/image/' + productDTO.getAttachmentDTO().
+                getAttachmentFileName()}}" class="single-card-img-top" alt="Not Available Image">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${'Name of Product: ' + productDTO.name}">Card title</h5>
                     <p class="card-text" th:text="${'Product Description: ' + productDTO.description}"></p>

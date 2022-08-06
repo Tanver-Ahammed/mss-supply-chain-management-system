@@ -2,9 +2,9 @@ package com.therap.supply.chain.admin.controller;
 
 import com.therap.supply.chain.admin.dto.AuthorityDTO;
 import com.therap.supply.chain.admin.dto.DealerDTO;
-import com.therap.supply.chain.admin.service.impl.AuthorityServiceImpl;
-import com.therap.supply.chain.admin.service.impl.DealerServiceImpl;
-import com.therap.supply.chain.admin.service.impl.FileServiceImpl;
+import com.therap.supply.chain.admin.dto.ProductDTO;
+import com.therap.supply.chain.admin.dto.RequisitionDTO;
+import com.therap.supply.chain.admin.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -36,6 +36,12 @@ public class DealerController {
 
     @Autowired
     private AuthorityServiceImpl authorityService;
+
+    @Autowired
+    private RequisitionServiceImpl requisitionService;
+
+    @Autowired
+    private ProductServiceImpl productService;
 
     @Autowired
     private FileServiceImpl fileService;
@@ -73,6 +79,59 @@ public class DealerController {
         model.addAttribute("message", "");
         return "dealer/show-single-dealer";
     }
+
+    // get all requisition by dealer
+    @GetMapping(path = "{dealerId}/requisition/{requisitionId}")
+    public String getSingleRequisitionByDealer(@PathVariable("dealerId") Long dealerId,
+                                               @PathVariable("requisitionId") Long requisitionId,
+                                               Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        RequisitionDTO requisitionDTO = this.requisitionService.getSingleRequisitionById(requisitionId);
+
+        model.addAttribute("requisitionDTO", requisitionDTO);
+        model.addAttribute("message", "");
+        model.addAttribute("totalProduct",
+                this.requisitionService.getTotalProductRequisition(requisitionDTO));
+        return "requisition/show-single-requisition-by-delaer";
+    }
+
+    // get single details requisition by dealer
+    @GetMapping(path = "{dealerId}/requisitions")
+    public String getAllRequisitionByDealer(@PathVariable("dealerId") Long dealerId,
+                                            Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        List<RequisitionDTO> requisitionDTOS = this.requisitionService.getAllRequisitionByDealerId(dealerId);
+
+        model.addAttribute("requisitionDTOS", requisitionDTOS);
+        model.addAttribute("message", "");
+        return "requisition/show-all-requisition-by-dealer";
+    }
+
+    @GetMapping(path = "/product/get/{productId}")
+    public String getProductId(@PathVariable("productId") Long productId,
+                               Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        ProductDTO productDTO = this.productService.getSingleProduct(productId);
+        model.addAttribute("productDTO", productDTO);
+        model.addAttribute("message", "");
+        return "product/show-single-product";
+    }
+
 
     // get image
     @GetMapping(value = "/image/{imageName}", produces = MediaType.APPLICATION_PDF_VALUE)

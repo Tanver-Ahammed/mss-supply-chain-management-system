@@ -25,11 +25,24 @@ public class RequisitionServiceImpl implements RequisitionService {
     private ProductServiceImpl productService;
 
     @Autowired
+    private DealerServiceImpl dealerService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public RequisitionDTO getSingleRequisitionById(Long requisitionId) {
         return this.requisitionToRequisitionDTO(this.getRequisition(requisitionId));
+    }
+
+    @Override
+    public List<RequisitionDTO> getAllRequisitionByDealerId(Long dealerId) {
+        return this.requisitionRepository
+                .findByDealer(this.dealerService.getDealer(dealerId))
+                .stream()
+                .map(this::requisitionToRequisitionDTO)
+                .sorted(Comparator.comparingLong(RequisitionDTO::getId))
+                .collect(Collectors.toList());
     }
 
     // get requisition

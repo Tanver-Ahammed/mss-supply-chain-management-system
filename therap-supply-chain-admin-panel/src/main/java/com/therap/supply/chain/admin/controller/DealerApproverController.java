@@ -62,7 +62,7 @@ public class DealerApproverController {
 
         model.addAttribute("dealerDTOS", dealerDTOS);
         model.addAttribute("message", "");
-        return "dealer/unapproved/show-all-unapproved-dealers";
+        return "dealer/approver/show-all-unapproved-dealers";
     }
 
     // get a single dealer
@@ -78,7 +78,7 @@ public class DealerApproverController {
         DealerDTO dealerDTO = this.dealerService.getSingleDealerById(dealerId);
         model.addAttribute("dealerDTO", dealerDTO);
         model.addAttribute("message", "");
-        return "dealer/show-single-dealer";
+        return "dealer/approver/show-single-dealer";
     }
 
     // dealer approve

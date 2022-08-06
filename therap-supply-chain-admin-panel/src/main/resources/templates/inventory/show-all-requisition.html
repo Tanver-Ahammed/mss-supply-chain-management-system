@@ -16,7 +16,7 @@
     <div class="container" style="text-align: center">
         <div class="row row-cols-3">
 
-            <h1 style="text-align: center">My Requisitions</h1>
+            <h1 style="text-align: center">Requisitions For Approve</h1>
             <div>
                 <p th:text="${message}" style="color: #318043; text-align: center"></p>
             </div>
@@ -38,12 +38,18 @@
                     <tr>
                         <th scope="row">
                             <b>
-                                <a th:href="@{${'/authority/requisition/' + requisitionDTO.id}}"
+                                <a th:href="@{${'/inventory/requisition/' + requisitionDTO.id}}"
                                    th:text="${'REQ-' + requisitionDTO.id}">
                                 </a>
                             </b>
                         </th>
-                        <td th:text="${requisitionDTO.dealerDTO.name}"></td>
+                        <td>
+                            <b>
+                                <a th:href="@{${'/dealer/get/' + requisitionDTO.dealerDTO.id}}"
+                                   th:text="${requisitionDTO.dealerDTO.name}">
+                                </a>
+                            </b>
+                        </td>
                         <td th:text="${requisitionDTO.date}"></td>
                         <td th:text="${requisitionDTO.totalAmountPrice}"></td>
                     </tr>

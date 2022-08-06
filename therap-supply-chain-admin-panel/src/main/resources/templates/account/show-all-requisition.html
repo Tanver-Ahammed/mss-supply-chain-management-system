@@ -16,7 +16,7 @@
     <div class="container" style="text-align: center">
         <div class="row row-cols-3">
 
-            <h1 style="text-align: center">My Requisitions</h1>
+            <h1 style="text-align: center">Requisitions For Approve</h1>
             <div>
                 <p th:text="${message}" style="color: #318043; text-align: center"></p>
             </div>
@@ -31,6 +31,7 @@
                     <th scope="col">Dealer Name</th>
                     <th scope="col">Requisition Date</th>
                     <th scope="col">Total Price</th>
+                    <th scope="col">Paid Amount</th>
                 </tr>
                 </thead>
                 <tbody class="table-warning">
@@ -38,7 +39,7 @@
                     <tr>
                         <th scope="row">
                             <b>
-                                <a th:href="@{${'/authority/requisition/' + requisitionDTO.id}}"
+                                <a th:href="@{${'/account/requisition/' + requisitionDTO.id}}"
                                    th:text="${'REQ-' + requisitionDTO.id}">
                                 </a>
                             </b>
@@ -52,6 +53,7 @@
                         </td>
                         <td th:text="${requisitionDTO.date}"></td>
                         <td th:text="${requisitionDTO.totalAmountPrice}"></td>
+                        <td th:text="${requisitionDTO.paidAmount}"></td>
                     </tr>
                 </div>
                 </tbody>

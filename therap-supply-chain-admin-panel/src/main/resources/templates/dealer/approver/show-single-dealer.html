@@ -23,9 +23,6 @@
                 <a th:href="@{${'/dealer/image/' + dealerDTO.attachmentDTOS.get(2).attachmentFileName}}"
                    class="btn btn-primary">Click Here to Showing Trade Licence</a>
 
-                <a th:href="@{${'/dealer/' + dealerDTO.id + '/requisitions'}}"
-                   class="btn btn-primary">My All Requisitions
-                </a>
 
                 <div class="card-body">
                     <div style="text-align: left">
@@ -40,6 +37,14 @@
                         <p class="card-title" th:text="${'Dealer Address: ' + dealerDTO.address}">
                             Card title</p>
                     </div>
+                    <a th:href="@{${'/approver/dealer/active/' + dealerDTO.id}}" type="submit"
+                       onclick="return approveIsConfirmed()" class="btn btn-success">Approve
+                        Dealer
+                    </a>
+                    <a th:href="@{${'/approver/dealer/cancel/' + dealerDTO.id}}" onclick="return CancelIsConfirmed()"
+                       class="btn btn-danger">Cancel
+                        Dealer
+                    </a>
                 </div>
             </div>
 

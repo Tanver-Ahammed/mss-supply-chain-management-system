@@ -16,7 +16,7 @@
             </div>
             <div th:each="dealerDTO : ${dealerDTOS}">
                 <div class="card" style="width: 18rem; height: 30rem;">
-                    <img th:src="@{${'/product/image/' + dealerDTO.attachmentDTOS.get(0)
+                    <img th:src="@{${'/dealer/image/' + dealerDTO.attachmentDTOS.get(0)
                     .getAttachmentFileName()}}"
                          height="250" width="150"
                          class="card-img-top" alt="Not Available Image">
@@ -25,7 +25,6 @@
                         <p class="card-text" th:text="${'Contact: ' + dealerDTO.contact}"></p>
                         <p class="card-text" th:text="${'Email: ' + dealerDTO.email}"></p>
                         <a th:href="@{${'/dealer/get/' + dealerDTO.id}}" class="btn btn-success">Details</a>
-                        <a href="#" class="btn btn-success">Add Cart</a>
                     </div>
                 </div>
                 <br>

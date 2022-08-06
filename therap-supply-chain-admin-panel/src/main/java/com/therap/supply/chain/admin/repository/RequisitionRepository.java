@@ -1,9 +1,9 @@
 package com.therap.supply.chain.admin.repository;
 
 
+import com.therap.supply.chain.admin.entities.Dealer;
 import com.therap.supply.chain.admin.entities.Requisition;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ import java.util.List;
  */
 
 public interface RequisitionRepository extends JpaRepository<Requisition, Long> {
+
+    List<Requisition> findByDealer(Dealer dealer);
 
     List<Requisition> findByIsSubmittedByDealerAndIsApproveByInventoryManager(boolean isSubmittedDealer, String isInventory);
 

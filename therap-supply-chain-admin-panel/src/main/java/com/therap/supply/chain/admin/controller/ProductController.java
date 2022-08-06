@@ -89,35 +89,33 @@ public class ProductController {
     //get all product
     @GetMapping(path = "/all")
     public String showAllProducts(Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
 
         List<ProductDTO> productDTOS = this.productService.getAllProducts();
         model.addAttribute("productDTOS", productDTOS);
         model.addAttribute("message", "");
 
-        // get logged-in username
-        if (principal != null) {
-            AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
-            model.addAttribute("authority", authority);
-            return "product/authenticated/show-all-products";
-        }
-        return "product/show-all-products";
+        return "product/authenticated/show-all-products";
     }
 
     // get a single product
     @GetMapping("/get/{productId}")
     public String getSingleProduct(@PathVariable("productId") long productId, Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
 
         ProductDTO productDTO = this.productService.getSingleProduct(productId);
         model.addAttribute("productDTO", productDTO);
         model.addAttribute("message", "");
 
-        // get logged-in username
-        if (principal != null) {
-            AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
-            model.addAttribute("authority", authority);
-            return "product/authenticated/show-single-product";
-        }
-        return "product/show-single-product";
+        return "product/authenticated/show-single-product";
     }
 
     // edit product details
