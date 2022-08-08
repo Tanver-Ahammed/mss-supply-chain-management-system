@@ -1,10 +1,15 @@
 package com.therap.supply.chain.admin.service.impl;
 
 import com.therap.supply.chain.admin.config.AppConstants;
+import com.therap.supply.chain.admin.dto.PaymentHistoryDTO;
 import com.therap.supply.chain.admin.dto.RequisitionDTO;
+import com.therap.supply.chain.admin.entities.PaymentHistory;
 import com.therap.supply.chain.admin.entities.Requisition;
+import com.therap.supply.chain.admin.exception.ResourceNotFoundException;
+import com.therap.supply.chain.admin.repository.PaymentHistoryRepository;
 import com.therap.supply.chain.admin.repository.RequisitionRepository;
 import com.therap.supply.chain.admin.service.AccountRequisitionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +25,15 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
 
     @Autowired
     private RequisitionServiceImpl requisitionService;
+
+    @Autowired
+    private PaymentHistoryRepository paymentHistoryRepository;
+
+    @Autowired
+    private PaymentHistoryServiceImpl paymentHistoryService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<RequisitionDTO> getAllRequisitionByForAccount() {
@@ -44,5 +58,39 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
         return true;
     }
 
+    @Override
+    public List<PaymentHistoryDTO> getAllPaymentForApprove() {
+        return this.paymentHistoryRepository
+                .findByIsApproveByAccountManager(false)
+                .stream()
+                .map(paymentHistory -> this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class))
+                .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PaymentHistoryDTO getPaymentHistoryById(Long paymentHistoryId) {
+        return this.modelMapper.map(this.getPaymentHistory(paymentHistoryId), PaymentHistoryDTO.class);
+    }
+
+    @Override
+    public Boolean isApprovePaymentHistoryStatusByAccount(Long paymentHistoryId, String paymentHistoryStatus) {
+        PaymentHistory paymentHistory = this.paymentHistoryService.getPaymentHistory(paymentHistoryId);
+        Requisition requisition = paymentHistory.getRequisition();
+        if (paymentHistoryStatus.equalsIgnoreCase(AppConstants.accept)) {
+            paymentHistory.setIsApproveByAccountManager(AppConstants.accept);
+            requisition.setPaidAmount(requisition.getPaidAmount() + paymentHistory.getAmount());
+            if (requisition.getTotalAmountPrice() <= requisition.getPaidAmount())
+                requisition.setPaid(true);
+        } else if (paymentHistoryStatus.equalsIgnoreCase(AppConstants.reject))
+            paymentHistory.setIsApproveByAccountManager(AppConstants.reject);
+        this.requisitionRepository.save(requisition);
+        return true;
+    }
+
+    public PaymentHistory getPaymentHistory(Long paymentHistoryId) {
+        return this.paymentHistoryRepository.findById(paymentHistoryId).orElseThrow(() ->
+                new ResourceNotFoundException("Payment History", "id", paymentHistoryId));
+    }
 
 }

@@ -97,7 +97,7 @@ public class DealerController {
         model.addAttribute("message", "");
         model.addAttribute("totalProduct",
                 this.requisitionService.getTotalProductRequisition(requisitionDTO));
-        return "requisition/show-single-requisition-by-delaer";
+        return "requisition/show-single-requisition-by-dealer";
     }
 
     // get single details requisition by dealer

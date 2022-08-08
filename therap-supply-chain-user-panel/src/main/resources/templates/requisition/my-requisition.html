@@ -14,7 +14,7 @@
 <section>
 
     <div class="container" style="text-align: center">
-        <div class="row row-cols-3">
+        <div class="row row-cols-1">
 
             <h1 style="text-align: center">
                 <b th:text="${'REQ-' + requisitionDTO.id}">
@@ -39,7 +39,7 @@
                 </tr>
                 </thead>
                 <tbody class="table-warning">
-                Fth:<div th:each="requisitionProductHistory : ${requisitionDTO.requisitionProductHistoryDTOS}">
+                <div th:each="requisitionProductHistory : ${requisitionDTO.requisitionProductHistoryDTOS}">
                     <tr>
                         <th scope="row" th:text="${'PROD-' + requisitionProductHistory.id}"></th>
                         <td>

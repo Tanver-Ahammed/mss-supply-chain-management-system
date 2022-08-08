@@ -1,6 +1,7 @@
 package com.therap.supply.chain.admin.controller;
 
 import com.therap.supply.chain.admin.dto.AuthorityDTO;
+import com.therap.supply.chain.admin.dto.PaymentHistoryDTO;
 import com.therap.supply.chain.admin.dto.RequisitionDTO;
 import com.therap.supply.chain.admin.service.impl.AuthorityServiceImpl;
 import com.therap.supply.chain.admin.service.impl.AccountRequisitionServiceImpl;
@@ -67,8 +68,8 @@ public class AccountController {
 
     @GetMapping(path = "requisition/{accountStatus}/{requisitionId}")
     public String setRequisitionStatusByAccount(@PathVariable("accountStatus") String accountStatus,
-                                                  @PathVariable("requisitionId") Long requisitionId,
-                                                  Model model, Principal principal) {
+                                                @PathVariable("requisitionId") Long requisitionId,
+                                                Model model, Principal principal) {
         // get logged-in username
         if (principal == null)
             return "authority/login";
@@ -77,6 +78,50 @@ public class AccountController {
 
         Boolean isApproveByAccount = this.accountRequisitionService.
                 isApproveRequisitionStatusByAccount(requisitionId, accountStatus);
+        return "redirect:/authority/account/requisitions";
+    }
+
+    @GetMapping(path = "/payment/histories")
+    public String getAllPaymentForApprove(Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+        model.addAttribute("message", "");
+        List<PaymentHistoryDTO> paymentHistoryDTOS = this.accountRequisitionService.getAllPaymentForApprove();
+        model.addAttribute("paymentHistoryDTOS", paymentHistoryDTOS);
+        return "account/all-payment-by-no-approve";
+
+    }
+
+    @GetMapping(path = "/payment/history/{paymentHistoryId}")
+    public String getPaymentById(@PathVariable("paymentHistoryId") Long paymentHistoryId,
+                                 Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+        model.addAttribute("message", "");
+        PaymentHistoryDTO paymentHistoryDTO = this.accountRequisitionService.getPaymentHistoryById(paymentHistoryId);
+        model.addAttribute("paymentHistoryDTO", paymentHistoryDTO);
+        return "account/accept-reject-payment-history";
+
+    }
+
+    @GetMapping(path = "/payment/history/{paymentHistoryStatus}/{paymentHistoryId}")
+    public String setPaymentHistoryStatusByAccount(@PathVariable("paymentHistoryStatus") String paymentHistoryStatus,
+                                                   @PathVariable("paymentHistoryId") Long paymentHistoryId,
+                                                   Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        Boolean isApproveByAccount = this.accountRequisitionService.
+                isApprovePaymentHistoryStatusByAccount(paymentHistoryId, paymentHistoryStatus);
         return "redirect:/authority/account/requisitions";
     }
 

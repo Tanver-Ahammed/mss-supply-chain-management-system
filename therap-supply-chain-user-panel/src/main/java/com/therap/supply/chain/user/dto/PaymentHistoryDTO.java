@@ -31,7 +31,7 @@ public class PaymentHistoryDTO {
 
     private Double amount;
 
-    private boolean isApproveByAccountManager;
+    private String isApproveByAccountManager;
 
     private RequisitionDTO requisitionDTO;
 

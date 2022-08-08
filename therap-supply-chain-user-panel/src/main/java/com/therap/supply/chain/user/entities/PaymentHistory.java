@@ -35,7 +35,7 @@ public class PaymentHistory {
 
     private Double amount;
 
-    private boolean isApproveByAccountManager;
+    private String isApproveByAccountManager;
 
     @ManyToOne
     @JoinColumn(name = "requisition_id_fk", referencedColumnName = "id")
