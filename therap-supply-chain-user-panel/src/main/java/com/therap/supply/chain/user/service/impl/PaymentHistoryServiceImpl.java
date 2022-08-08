@@ -40,7 +40,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
     @Override
     public List<PaymentHistoryDTO> getAllPaymentByRequisitionId(Long requisitionId) {
         return this.paymentHistoryRepository
-                .findById(requisitionId)
+                .findByRequisition(this.requisitionService.getRequisition(requisitionId))
                 .stream()
                 .map(this::paymentHistoryToPaymentHistoryDTO)
                 .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))

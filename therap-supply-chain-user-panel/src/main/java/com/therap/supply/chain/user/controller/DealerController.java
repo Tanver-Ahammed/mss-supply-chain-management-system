@@ -2,6 +2,7 @@ package com.therap.supply.chain.user.controller;
 
 import com.therap.supply.chain.user.dto.DealerDTO;
 import com.therap.supply.chain.user.service.DealerService;
+import com.therap.supply.chain.user.service.impl.DealerProductsCartServiceImpl;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
 import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class DealerController {
 
     @Autowired
     private RequisitionServiceImpl requisitionService;
+
+    @Autowired
+    private DealerProductsCartServiceImpl dealerProductsCartService;
 
     @GetMapping(path = "/add")
     public String addDealer(Model model, Principal principal) {
@@ -111,8 +115,8 @@ public class DealerController {
 
         model.addAttribute("message", "");
         model.addAttribute("dangerMessage", "");
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
         return "dealer/profile-dealer";
     }
 
@@ -133,8 +137,8 @@ public class DealerController {
 
         model.addAttribute("message", "");
         model.addAttribute("dangerMessage", "");
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
         return "dealer/update-dealer";
     }
 
@@ -157,8 +161,8 @@ public class DealerController {
                 .updateDealer(dealerDTO, dealer.getId(), dealerImage);    // save the dealer database
         model.addAttribute("dealerDTO", new DealerDTO());
 
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
         return "redirect:/home";
     }
 

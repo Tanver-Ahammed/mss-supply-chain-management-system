@@ -93,13 +93,16 @@ public class RequisitionServiceImpl implements RequisitionService {
 
     // requisition to requisitionDTO
     public RequisitionDTO requisitionToRequisitionDTO(Requisition requisition) {
-        requisition.setRequisitionProductHistories(requisition
-                .getRequisitionProductHistories()
-                .stream()
-                .filter(rph -> !rph.isDeleted())
-                .sorted(Comparator.comparingLong(RequisitionProductHistory::getId))
-                .collect(Collectors.toList())
-        );
+        // sorting
+        if (requisition.getRequisitionProductHistories() != null) {
+            requisition.setRequisitionProductHistories(requisition
+                    .getRequisitionProductHistories()
+                    .stream()
+                    .filter(rph -> !rph.isDeleted())
+                    .sorted(Comparator.comparingLong(RequisitionProductHistory::getId))
+                    .collect(Collectors.toList())
+            );
+        }
 
         RequisitionDTO requisitionDTO = this.modelMapper.map(requisition, RequisitionDTO.class);
         requisitionDTO.setDealerDTO(this.modelMapper.map(requisition.getDealer(), DealerDTO.class));
@@ -107,18 +110,22 @@ public class RequisitionServiceImpl implements RequisitionService {
         requisitionDTO.getDealerDTO().setVerificationCode(null);
 
         List<RequisitionProductHistoryDTO> requisitionProductHistoryDTOS = new ArrayList<>();
-        for (RequisitionProductHistory requisitionProductHistory : requisition.getRequisitionProductHistories()) {
-            RequisitionProductHistoryDTO rphDTO = this.modelMapper.map(requisitionProductHistory, RequisitionProductHistoryDTO.class);
-            ProductDTO productDTO = this.productService.productToProductDTO(requisitionProductHistory.getProduct());
-            rphDTO.setProductDTO(productDTO);
-            requisitionProductHistoryDTOS.add(rphDTO);
+        if (requisition.getRequisitionProductHistories() != null) {
+            for (RequisitionProductHistory requisitionProductHistory : requisition.getRequisitionProductHistories()) {
+                RequisitionProductHistoryDTO rphDTO = this.modelMapper.map(requisitionProductHistory, RequisitionProductHistoryDTO.class);
+                ProductDTO productDTO = this.productService.productToProductDTO(requisitionProductHistory.getProduct());
+                rphDTO.setProductDTO(productDTO);
+                requisitionProductHistoryDTOS.add(rphDTO);
+            }
         }
         requisitionDTO.setRequisitionProductHistoryDTOS(requisitionProductHistoryDTOS);
 
-        requisitionDTO.setPaymentHistoryDTOS(requisition.getPaymentHistories().stream()
-                .map(paymentHistory -> this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class))
-                .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))
-                .collect(Collectors.toList()));
+        if (requisition.getPaymentHistories() != null) {
+            requisitionDTO.setPaymentHistoryDTOS(requisition.getPaymentHistories().stream()
+                    .map(paymentHistory -> this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class))
+                    .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))
+                    .collect(Collectors.toList()));
+        }
         return requisitionDTO;
     }
 

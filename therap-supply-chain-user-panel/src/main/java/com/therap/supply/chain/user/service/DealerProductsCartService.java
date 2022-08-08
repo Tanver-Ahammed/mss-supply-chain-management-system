@@ -17,4 +17,6 @@ public interface DealerProductsCartService {
 
     Boolean dealerCartFinalSubmit(Long requisitionId);
 
+    Integer getTotalItemProduct(Long dealerId);
+
 }

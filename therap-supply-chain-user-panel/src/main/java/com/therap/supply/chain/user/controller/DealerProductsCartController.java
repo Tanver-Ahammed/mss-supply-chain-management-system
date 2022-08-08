@@ -47,8 +47,8 @@ public class DealerProductsCartController {
         Boolean isProductAdd = this.dealerProductsCartService
                 .addProductsDealerCart(dealer.getId(), productId);
 
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         return "redirect:/product/all";
     }
@@ -59,8 +59,8 @@ public class DealerProductsCartController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         model.addAttribute("message", "");
         RequisitionDTO requisitionDTO = this.requisitionService.getLastRequisitionByDealer(dealer.getId());
@@ -81,8 +81,8 @@ public class DealerProductsCartController {
 
         this.dealerProductsCartService.deleteProductFromDealerCart(requisitionId, rphId);
 
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         return "redirect:/dealer/cart";
     }
@@ -93,8 +93,8 @@ public class DealerProductsCartController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         model.addAttribute("message", "");
         RequisitionDTO requisitionDTO = this.requisitionService.
@@ -123,8 +123,8 @@ public class DealerProductsCartController {
 
         System.out.println(requisitionId);
         this.dealerProductsCartService.checkoutCart(historyBindDTO, requisitionId);
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
         return "redirect:/dealer/cart";
     }
 

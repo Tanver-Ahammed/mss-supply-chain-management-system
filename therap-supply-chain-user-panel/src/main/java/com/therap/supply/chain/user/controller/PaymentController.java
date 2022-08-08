@@ -3,6 +3,7 @@ package com.therap.supply.chain.user.controller;
 import com.therap.supply.chain.user.dto.DealerDTO;
 import com.therap.supply.chain.user.dto.PaymentHistoryDTO;
 import com.therap.supply.chain.user.dto.RequisitionDTO;
+import com.therap.supply.chain.user.service.impl.DealerProductsCartServiceImpl;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
 import com.therap.supply.chain.user.service.impl.PaymentHistoryServiceImpl;
 import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
@@ -33,6 +34,9 @@ public class PaymentController {
     @Autowired
     private RequisitionServiceImpl requisitionService;
 
+    @Autowired
+    private DealerProductsCartServiceImpl dealerProductsCartService;
+
     @GetMapping(path = "/requisition/{requisitionId}")
     public String addPaymentByRequisition(@PathVariable("requisitionId") Long requisitionId,
                                           Model model, Principal principal) {
@@ -50,8 +54,8 @@ public class PaymentController {
         Double totalAmountOfRest = requisitionDTO.getTotalAmountPrice() - requisitionDTO.getPaidAmount();
         model.addAttribute("totalAmountOfRest", totalAmountOfRest);
 
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
         return "payment/add-payment";
     }
 
@@ -89,8 +93,8 @@ public class PaymentController {
                 .getAllPaymentByRequisitionId(requisitionId);
         model.addAttribute("message", "");
         model.addAttribute("paymentHistoryDTOS", paymentHistoryDTOS);
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         return "payment/all-payment-by-requisition";
     }

@@ -1,6 +1,8 @@
 package com.therap.supply.chain.user.service.impl;
 
 import com.therap.supply.chain.user.config.AppConstants;
+import com.therap.supply.chain.user.dto.DealerDTO;
+import com.therap.supply.chain.user.dto.RequisitionDTO;
 import com.therap.supply.chain.user.dto.RequisitionProductHistoryBindDTO;
 import com.therap.supply.chain.user.dto.RequisitionProductHistoryDTO;
 import com.therap.supply.chain.user.entities.Dealer;
@@ -175,6 +177,15 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
         requisition.setIsDelivered(AppConstants.pause);
         this.requisitionRepository.save(requisition);
         return true;
+    }
+
+    @Override
+    public Integer getTotalItemProduct(Long dealerId) {
+        RequisitionDTO requisitionDTO = this.requisitionService.getLastRequisitionByDealer(dealerId);
+        if (requisitionDTO == null)
+            return 0;
+        else
+            return requisitionDTO.getRequisitionProductHistoryDTOS().size();
     }
 
 }

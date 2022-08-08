@@ -2,6 +2,7 @@ package com.therap.supply.chain.user.controller;
 
 import com.therap.supply.chain.user.dto.DealerDTO;
 import com.therap.supply.chain.user.dto.RequisitionDTO;
+import com.therap.supply.chain.user.service.impl.DealerProductsCartServiceImpl;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
 import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class RequisitionController {
     @Autowired
     private DealerServiceImpl dealerService;
 
+    @Autowired
+    private DealerProductsCartServiceImpl dealerProductsCartService;
+
     @GetMapping(path = "/all")
     public String getAllRequisitionByDealer(Model model, Principal principal) {
         // get logged-in username
@@ -41,8 +45,8 @@ public class RequisitionController {
         model.addAttribute("requisitionDTOS", requisitionDTOS);
 
         model.addAttribute("message", "");
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         return "requisition/my-all-requisition";
     }
@@ -62,8 +66,8 @@ public class RequisitionController {
         model.addAttribute("message", "");
         model.addAttribute("totalProduct",
                 this.requisitionService.getTotalProductRequisition(requisitionDTO));
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         return "requisition/my-requisition";
     }

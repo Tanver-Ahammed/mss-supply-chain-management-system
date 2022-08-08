@@ -2,10 +2,7 @@ package com.therap.supply.chain.user.controller;
 
 import com.therap.supply.chain.user.dto.DealerDTO;
 import com.therap.supply.chain.user.dto.ProductDTO;
-import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
-import com.therap.supply.chain.user.service.impl.FileServiceImpl;
-import com.therap.supply.chain.user.service.impl.ProductServiceImpl;
-import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
+import com.therap.supply.chain.user.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -36,7 +33,7 @@ public class ProductController {
     private RequisitionServiceImpl requisitionService;
 
     @Autowired
-    private FileServiceImpl fileService;
+    private DealerProductsCartServiceImpl dealerProductsCartService;
 
     @Value("${project.image}")
     private String path;
@@ -87,8 +84,8 @@ public class ProductController {
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
-        model.addAttribute("totalItemProduct", this.requisitionService
-                .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
 
         ProductDTO productDTO = this.productService.getSingleProduct(productId);
         System.err.println(productId);
