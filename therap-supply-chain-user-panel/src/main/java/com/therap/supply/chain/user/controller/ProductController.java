@@ -50,8 +50,8 @@ public class ProductController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalItemProduct", this.requisitionService
-                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                    .getTotalItemProduct(dealer.getId()));
             return "product/authenticated/show-all-products";
         }
         return "product/show-all-products";
@@ -69,8 +69,8 @@ public class ProductController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalItemProduct", this.requisitionService
-                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                    .getTotalItemProduct(dealer.getId()));
             return "product/authenticated/show-single-product";
         }
         return "product/show-single-product";

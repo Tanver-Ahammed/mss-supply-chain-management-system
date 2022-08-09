@@ -11,10 +11,6 @@ public interface AccountRequisitionService {
 
     Boolean isApproveRequisitionStatusByAccount(Long requisitionId, String accountStatus);
 
-    List<PaymentHistoryDTO> getAllPaymentForApprove();
-
-    PaymentHistoryDTO getPaymentHistoryById(Long paymentHistoryId);
-
     Boolean isApprovePaymentHistoryStatusByAccount(Long paymentHistoryId, String paymentHistoryStatus);
 
 }

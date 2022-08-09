@@ -41,7 +41,7 @@
                 <tbody class="table-warning">
                 <div th:each="requisitionProductHistory : ${requisitionDTO.requisitionProductHistoryDTOS}">
                     <tr>
-                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.id}"></th>
+                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.productDTO.id}"></th>
                         <td>
                             <b>
                                 <a th:href="@{${'/product/get/' + requisitionProductHistory.productDTO.id}}"
@@ -63,25 +63,30 @@
                 </tbody>
             </table>
 
-            <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
+            <a th:if="${requisitionDTO.isApproveByAccountManager == 'PAUSE'}"
                th:href=" @{${'/account/requisition/accept/' + requisitionDTO.id}}"
                type="submit" class="btn btn-success">Accept Requisition
             </a>
             &nbsp
-            <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
+            <a th:if="${requisitionDTO.isApproveByAccountManager == 'PAUSE'}"
                th:href=" @{${'/account/requisition/reject/' + requisitionDTO.id}}"
                type="submit" class="btn btn-danger">Reject Requisition
             </a>
         </div>
     </div>
 
-    <br><br><br>
     <hr>
     <hr>
 
     <div class="container" style="text-align: center">
         <div class="row row-cols-1">
 
+            <span th:if="${requisitionDTO.paid == false}">
+                <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
+                   th:href=" @{${'/account/payment/requisition/' + requisitionDTO.id}}"
+                   type="submit" class="btn btn-danger">Click For Payment
+                </a>
+            </span>
 
             <div class="container">
                 <h1 th:text="${requisitionDTO.dealerDTO.name + ' Payment History'}"></h1>

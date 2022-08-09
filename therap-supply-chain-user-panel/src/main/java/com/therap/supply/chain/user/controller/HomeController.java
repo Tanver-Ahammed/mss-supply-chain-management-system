@@ -1,9 +1,9 @@
 package com.therap.supply.chain.user.controller;
 
 import com.therap.supply.chain.user.dto.DealerDTO;
+import com.therap.supply.chain.user.service.impl.DealerProductsCartServiceImpl;
 import com.therap.supply.chain.user.service.impl.DealerServiceImpl;
 import com.therap.supply.chain.user.service.impl.FileServiceImpl;
-import com.therap.supply.chain.user.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -29,7 +29,7 @@ public class HomeController {
     private DealerServiceImpl dealerService;
 
     @Autowired
-    private RequisitionServiceImpl requisitionService;
+    private DealerProductsCartServiceImpl dealerProductsCartService;
 
     @Autowired
     private FileServiceImpl fileService;
@@ -50,8 +50,8 @@ public class HomeController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalItemProduct", this.requisitionService
-                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                    .getTotalItemProduct(dealer.getId()));
             return "dealer/home";
         }
         model.addAttribute("message", "");
@@ -131,8 +131,8 @@ public class HomeController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalItemProduct", this.requisitionService
-                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                    .getTotalItemProduct(dealer.getId()));
             return "dealer/developer";
         }
 

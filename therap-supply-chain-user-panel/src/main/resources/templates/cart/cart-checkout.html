@@ -47,7 +47,7 @@
                                 <div th:each="requisitionProductHistory, itemStat : *{rphDTO}">
                                     <tr>
                                         <input hidden th:field="*{rphDTO[__${itemStat.index}__].id}"/>
-                                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.id}"></th>
+                                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.productDTO.id}"></th>
                                         <td th:text="${requisitionProductHistory.productDTO.name}"></td>
                                         <td th:text="${requisitionProductHistory.price}"></td>
                                         <td>

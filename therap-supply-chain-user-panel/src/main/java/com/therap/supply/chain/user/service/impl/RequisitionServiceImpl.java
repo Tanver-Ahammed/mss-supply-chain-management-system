@@ -58,11 +58,11 @@ public class RequisitionServiceImpl implements RequisitionService {
         Dealer dealer = this.dealerService.getDealer(dealerId);
         Requisition requisition = null;
         requisition = this.requisitionRepository.getByDealerAndIsSubmittedByDealer(dealer, false);
-//        if (requisition == null) {
-//            requisition = new Requisition();
-//            requisition.setDealer(dealer);
-//            this.requisitionRepository.save(requisition);
-//        }
+        if (requisition == null) {
+            requisition = new Requisition();
+            requisition.setDealer(dealer);
+            this.requisitionRepository.save(requisition);
+        }
         return this.requisitionToRequisitionDTO(requisition);
     }
 
@@ -95,6 +95,8 @@ public class RequisitionServiceImpl implements RequisitionService {
 
     // requisition to requisitionDTO
     public RequisitionDTO requisitionToRequisitionDTO(Requisition requisition) {
+        if (requisition == null)
+            return null;
         // sorting
         if (requisition.getRequisitionProductHistories() != null) {
             requisition.setRequisitionProductHistories(requisition

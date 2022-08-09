@@ -59,21 +59,6 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
     }
 
     @Override
-    public List<PaymentHistoryDTO> getAllPaymentForApprove() {
-        return this.paymentHistoryRepository
-                .findByIsApproveByAccountManager(AppConstants.pause)
-                .stream()
-                .map(paymentHistory -> this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class))
-                .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public PaymentHistoryDTO getPaymentHistoryById(Long paymentHistoryId) {
-        return this.modelMapper.map(this.getPaymentHistory(paymentHistoryId), PaymentHistoryDTO.class);
-    }
-
-    @Override
     public Boolean isApprovePaymentHistoryStatusByAccount(Long paymentHistoryId, String paymentHistoryStatus) {
         PaymentHistory paymentHistory = this.paymentHistoryService.getPaymentHistory(paymentHistoryId);
         Requisition requisition = paymentHistory.getRequisition();
@@ -88,11 +73,6 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
             paymentHistory.setIsApproveByAccountManager(AppConstants.reject);
         this.requisitionRepository.save(requisition);
         return true;
-    }
-
-    public PaymentHistory getPaymentHistory(Long paymentHistoryId) {
-        return this.paymentHistoryRepository.findById(paymentHistoryId).orElseThrow(() ->
-                new ResourceNotFoundException("Payment History", "id", paymentHistoryId));
     }
 
 }

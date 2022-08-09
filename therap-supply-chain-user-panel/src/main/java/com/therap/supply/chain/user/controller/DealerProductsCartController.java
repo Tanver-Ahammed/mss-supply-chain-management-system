@@ -139,7 +139,13 @@ public class DealerProductsCartController {
         Boolean isCartSubmitted = this.dealerProductsCartService.dealerCartFinalSubmit(requisitionId);
         if (isCartSubmitted)
             model.addAttribute("message", "Your Requisition is Added Successfully...");
-        return "redirect:/dealer/cart";
+        model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                .getTotalItemProduct(dealer.getId()));
+        RequisitionDTO requisitionDTO = this.requisitionService.getLastRequisitionByDealer(dealer.getId());
+        model.addAttribute("requisitionDTO", requisitionDTO);
+        model.addAttribute("totalProduct",
+                this.requisitionService.getTotalProductRequisition(requisitionDTO));
+        return "cart/dealer-cart";
     }
 
 }

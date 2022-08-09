@@ -5,14 +5,15 @@ import com.therap.supply.chain.admin.dto.PaymentHistoryDTO;
 import com.therap.supply.chain.admin.dto.RequisitionDTO;
 import com.therap.supply.chain.admin.service.impl.AuthorityServiceImpl;
 import com.therap.supply.chain.admin.service.impl.AccountRequisitionServiceImpl;
+import com.therap.supply.chain.admin.service.impl.PaymentHistoryServiceImpl;
 import com.therap.supply.chain.admin.service.impl.RequisitionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -24,10 +25,55 @@ public class AccountController {
     private AccountRequisitionServiceImpl accountRequisitionService;
 
     @Autowired
+    private PaymentHistoryServiceImpl paymentHistoryService;
+
+    @Autowired
     private AuthorityServiceImpl authorityService;
 
     @Autowired
     private RequisitionServiceImpl requisitionService;
+
+    @GetMapping(path = "/payment/requisition/{requisitionId}")
+    public String addPaymentByRequisition(@PathVariable("requisitionId") Long requisitionId,
+                                          Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        model.addAttribute("paymentHistoryDTO", new PaymentHistoryDTO());
+        model.addAttribute("message", "");
+        model.addAttribute("requisitionId", requisitionId);
+
+        return "account/add-payment";
+    }
+
+    @PostMapping(path = "/payment/requisition/{requisitionId}")
+    public String savePaymentByRequisition(@Valid @ModelAttribute("paymentHistoryDTO") PaymentHistoryDTO paymentHistoryDTO,
+                                           BindingResult result,
+                                           @PathVariable("requisitionId") Long requisitionId,
+                                           Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        if (result.hasErrors()) {
+            return "account/add-payment";
+        }
+        paymentHistoryDTO.setMedium("Account Manager");
+        paymentHistoryDTO.setAccountNo(authority.getName());
+        paymentHistoryDTO.setTransactionId("AUTH-" + authority.getId().toString());
+
+        paymentHistoryDTO = this.paymentHistoryService.savePayment(requisitionId, paymentHistoryDTO);
+        if (paymentHistoryDTO != null)
+            model.addAttribute("message", "Your Payment Submit Successfully...");
+        model.addAttribute("paymentHistoryDTO", new PaymentHistoryDTO());
+        return "account/add-payment";
+    }
+
 
     @GetMapping(path = "/requisitions")
     public String getAllRequisitionForAccount(Model model, Principal principal) {
@@ -89,7 +135,7 @@ public class AccountController {
         AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
         model.addAttribute("message", "");
-        List<PaymentHistoryDTO> paymentHistoryDTOS = this.accountRequisitionService.getAllPaymentForApprove();
+        List<PaymentHistoryDTO> paymentHistoryDTOS = this.paymentHistoryService.getAllPaymentForApprove();
         model.addAttribute("paymentHistoryDTOS", paymentHistoryDTOS);
         return "account/all-payment-by-no-approve";
 
@@ -104,7 +150,7 @@ public class AccountController {
         AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
         model.addAttribute("message", "");
-        PaymentHistoryDTO paymentHistoryDTO = this.accountRequisitionService.getPaymentHistoryById(paymentHistoryId);
+        PaymentHistoryDTO paymentHistoryDTO = this.paymentHistoryService.getPaymentHistoryById(paymentHistoryId);
         model.addAttribute("paymentHistoryDTO", paymentHistoryDTO);
         return "account/accept-reject-payment-history";
 

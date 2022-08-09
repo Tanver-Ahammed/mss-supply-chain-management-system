@@ -42,7 +42,7 @@
                 <tbody class="table-warning">
                 <div th:each="requisitionProductHistory : ${requisitionDTO.requisitionProductHistoryDTOS}">
                     <tr>
-                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.id}"></th>
+                        <th scope="row" th:text="${'PROD-' + requisitionProductHistory.productDTO.id}"></th>
                         <td>
                             <b>
                                 <a th:href="@{${'/dealer/product/get/' + requisitionProductHistory.productDTO.id}}"

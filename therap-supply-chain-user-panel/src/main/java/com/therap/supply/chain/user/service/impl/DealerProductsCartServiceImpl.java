@@ -182,6 +182,9 @@ public class DealerProductsCartServiceImpl implements DealerProductsCartService 
     @Override
     public Integer getTotalItemProduct(Long dealerId) {
         RequisitionDTO requisitionDTO = this.requisitionService.getLastRequisitionByDealer(dealerId);
+
+        System.out.println(requisitionDTO);
+
         if (requisitionDTO == null)
             return 0;
         else

@@ -49,8 +49,8 @@ public class DealerController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalItemProduct", this.requisitionService
-                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                    .getTotalItemProduct(dealer.getId()));
             return "dealer/authenticated-registration-dealer";
         }
         return "dealer/registration-dealer";
@@ -93,8 +93,8 @@ public class DealerController {
         if (principal != null) {
             DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
             model.addAttribute("dealer", dealer);
-            model.addAttribute("totalItemProduct", this.requisitionService
-                    .getLastRequisitionByDealer(dealer.getId()).getRequisitionProductHistoryDTOS().size());
+            model.addAttribute("totalItemProduct", this.dealerProductsCartService
+                    .getTotalItemProduct(dealer.getId()));
             return "dealer/authenticated-registration-dealer";
         }
         return "dealer/registration-dealer";

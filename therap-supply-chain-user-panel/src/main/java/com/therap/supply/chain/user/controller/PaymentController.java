@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -60,23 +61,25 @@ public class PaymentController {
     }
 
     @PostMapping(path = "/save/{requisitionId}")
-    public String savePayment(@ModelAttribute("paymentHistoryDTO") PaymentHistoryDTO paymentHistoryDTO,
+    public String savePayment(@Valid @ModelAttribute("paymentHistoryDTO") PaymentHistoryDTO paymentHistoryDTO,
+                              BindingResult result,
                               @PathVariable("requisitionId") Long requisitionId,
-                              BindingResult result, Model model, Principal principal) {
-        model.addAttribute("dealerDTO", paymentHistoryDTO);
-        if (result.hasErrors()) {
-            return "dealer/registration-dealer";
-        }
-
+                              Model model, Principal principal) {
         // get logged-in username
         if (principal == null)
             return "dealer/login";
         DealerDTO dealer = this.dealerService.getDealerDTOIfLoggedIn(principal);
         model.addAttribute("dealer", dealer);
 
-        paymentHistoryDTO = this.paymentHistoryService.savePayment(requisitionId, paymentHistoryDTO);
+        model.addAttribute("paymentHistoryDTO", new PaymentHistoryDTO());
+        if (result.hasErrors()) {
+            return "payment/add-payment";
+        }
 
-        return "redirect:/dealer/requisition/all";
+        paymentHistoryDTO = this.paymentHistoryService.savePayment(requisitionId, paymentHistoryDTO);
+        if (paymentHistoryDTO != null)
+            model.addAttribute("message", "Your Payment Submit Successfully...");
+        return "payment/add-payment";
 
     }
 
