@@ -16,7 +16,7 @@
     <div class="container" style="text-align: center">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
-                <h1 class="text-center"> Add New Dealer </h1>
+                <h1 class="text-center"> Accept Or Reject Payment </h1>
                 <div>
                     <p th:text="${message}" style="color: #318043; text-align: center"></p>
                 </div>
@@ -27,8 +27,9 @@
                             <span class="input-group-text">Payment ID</span>
                         </div>
                         <input
+                                readonly
                                 type="text"
-                                th:value="${paymentHistoryDTO.id}"
+                                th:value="${'PAY-' + paymentHistoryDTO.id}"
                                 class="form-control"
                                 aria-label="Default"
                                 aria-describedby="inputGroup-sizing-default">
@@ -38,6 +39,7 @@
                             <span class="input-group-text">Payment Date</span>
                         </div>
                         <input
+                                readonly
                                 type="text"
                                 th:value="${paymentHistoryDTO.date}"
                                 class="form-control"
@@ -49,6 +51,7 @@
                             <span class="input-group-text">Payment Medium</span>
                         </div>
                         <input
+                                readonly
                                 type="text"
                                 th:value="${paymentHistoryDTO.medium}"
                                 class="form-control"
@@ -60,6 +63,7 @@
                             <span class="input-group-text">Payment Account No.</span>
                         </div>
                         <input
+                                readonly
                                 type="text"
                                 th:value="${paymentHistoryDTO.accountNo}"
                                 class="form-control"
@@ -71,6 +75,7 @@
                             <span class="input-group-text">Payment Transaction ID</span>
                         </div>
                         <input
+                                readonly
                                 type="text"
                                 th:value="${paymentHistoryDTO.transactionId}"
                                 class="form-control"
@@ -82,6 +87,7 @@
                             <span class="input-group-text">Payment Amount</span>
                         </div>
                         <input
+                                readonly
                                 type="text"
                                 th:value="${paymentHistoryDTO.amount}"
                                 class="form-control"
@@ -89,14 +95,16 @@
                                 aria-describedby="inputGroup-sizing-default">
                     </div>
 
+                    <span th:if="${paymentHistoryDTO.isApproveByAccountManager} == 'PAUSE'">
+                        <a th:href=" @{${'/account/payment/history/accept/' + paymentHistoryDTO.id}}"
+                           type="submit" class="btn btn-success">Accept PaymentHistory
+                        </a>
+                        &nbsp
+                        <a th:href=" @{${'/account/payment/history/reject/' + paymentHistoryDTO.id}}"
+                           type="submit" class="btn btn-danger">Reject PaymentHistory
+                        </a>
+                    </span>
 
-                    <a th:href=" @{${'/account/payment/history/accept/' + paymentHistoryDTO.id}}"
-                       type="submit" class="btn btn-success">Accept PaymentHistory
-                    </a>
-                    &nbsp
-                    <a th:href=" @{${'/account/payment/history/reject/' + paymentHistoryDTO.id}}"
-                       type="submit" class="btn btn-danger">Reject PaymentHistory
-                    </a>
                 </div>
             </div>
         </div>

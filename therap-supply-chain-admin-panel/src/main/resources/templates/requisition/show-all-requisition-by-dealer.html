@@ -51,38 +51,39 @@
                         <td th:text="${requisitionDTO.totalAmountPrice}"></td>
                         <td th:text="${requisitionDTO.paidAmount}"></td>
                         <td>
-                            <span th:if="${requisitionDTO.isApproveByInventoryManager == 'AEECPT'}">
+                            <span th:if="${requisitionDTO.isApproveByInventoryManager == 'ACCEPT'}">
                                 <i class="fa fag fa-solid fa-check"></i>
                             </span>
                             <span th:if="${requisitionDTO.isApproveByInventoryManager == 'PAUSE'}">
-                                <i class="fa fag fa-solid fa-plus"></i>
+                                <i class="fa fab fa-solid fa-plus"></i>
                             </span>
                             <span th:if="${requisitionDTO.isApproveByInventoryManager == 'REJECT'}">
-                                <i class="fa fab fa-solid fa-xmark"></i>
+                                <i class="fa far fa-solid fa-xmark"></i>
                             </span>
                         </td>
                         <td>
-                            <span th:if="${requisitionDTO.isApproveByAccountManager == 'AEECPT'}">
+                            <span th:if="${requisitionDTO.isApproveByAccountManager == 'ACCEPT'}">
                                 <i class="fa fag fa-solid fa-check"></i>
                             </span>
-                            <span th:if="${requisitionDTO.isApproveByInventoryManager == 'PAUSE'}">
-                                <i class="fa fag fa-solid fa-plus"></i>
+                            <span th:if="${requisitionDTO.isApproveByAccountManager == 'PAUSE'}">
+                                <i class="fa fab fa-solid fa-plus"></i>
                             </span>
                             <span th:if="${requisitionDTO.isApproveByAccountManager == 'REJECT'}">
-                                <i class="fa fab fa-solid fa-xmark"></i>
+                                <i class="fa far fa-solid fa-xmark"></i>
                             </span>
                         </td>
                         <td>
-                            <span th:if="${requisitionDTO.isDelivered == 'AEECPT'}">
+                            <span th:if="${requisitionDTO.isDelivered == 'ACCEPT'}">
                                 <i class="fa fag fa-solid fa-check"></i>
                             </span>
-                            <span th:if="${requisitionDTO.isApproveByInventoryManager == 'PAUSE'}">
-                                <i class="fa fag fa-solid fa-plus"></i>
+                            <span th:if="${requisitionDTO.isDelivered == 'PAUSE'}">
+                                <i class="fa fab fa-solid fa-plus"></i>
                             </span>
                             <span th:if="${requisitionDTO.isDelivered == 'REJECT'}">
-                                <i class="fa fab fa-solid fa-xmark"></i>
+                                <i class="fa far fa-solid fa-xmark"></i>
                             </span>
                         </td>
+
                     </tr>
                 </div>
                 </tbody>

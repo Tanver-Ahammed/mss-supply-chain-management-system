@@ -1,5 +1,6 @@
 package com.therap.supply.chain.user.service.impl;
 
+import com.therap.supply.chain.user.config.AppConstants;
 import com.therap.supply.chain.user.dto.PaymentHistoryDTO;
 import com.therap.supply.chain.user.entities.PaymentHistory;
 import com.therap.supply.chain.user.entities.Requisition;
@@ -33,6 +34,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
         Requisition requisition = this.requisitionService.getRequisition(requisitionId);
         paymentHistory.setRequisition(requisition);
         paymentHistory.setDate(new Date());
+        paymentHistory.setIsApproveByAccountManager(AppConstants.pause);
         paymentHistory = this.paymentHistoryRepository.save(paymentHistory);
         return this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class);
     }

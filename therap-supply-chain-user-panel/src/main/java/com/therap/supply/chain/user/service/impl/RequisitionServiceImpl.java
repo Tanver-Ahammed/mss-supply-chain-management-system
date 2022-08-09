@@ -58,11 +58,11 @@ public class RequisitionServiceImpl implements RequisitionService {
         Dealer dealer = this.dealerService.getDealer(dealerId);
         Requisition requisition = null;
         requisition = this.requisitionRepository.getByDealerAndIsSubmittedByDealer(dealer, false);
-        if (requisition == null) {
-            requisition = new Requisition();
-            requisition.setDealer(dealer);
-            this.requisitionRepository.save(requisition);
-        }
+//        if (requisition == null) {
+//            requisition = new Requisition();
+//            requisition.setDealer(dealer);
+//            this.requisitionRepository.save(requisition);
+//        }
         return this.requisitionToRequisitionDTO(requisition);
     }
 
@@ -77,6 +77,8 @@ public class RequisitionServiceImpl implements RequisitionService {
     }
 
     public Long getTotalProductRequisition(RequisitionDTO requisitionDTO) {
+        if (requisitionDTO.getRequisitionProductHistoryDTOS() == null)
+            return 0L;
         return requisitionDTO
                 .getRequisitionProductHistoryDTOS()
                 .stream()

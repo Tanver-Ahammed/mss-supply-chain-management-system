@@ -61,7 +61,7 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
     @Override
     public List<PaymentHistoryDTO> getAllPaymentForApprove() {
         return this.paymentHistoryRepository
-                .findByIsApproveByAccountManager(false)
+                .findByIsApproveByAccountManager(AppConstants.pause)
                 .stream()
                 .map(paymentHistory -> this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class))
                 .sorted(Comparator.comparingLong(PaymentHistoryDTO::getId))
@@ -77,6 +77,8 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
     public Boolean isApprovePaymentHistoryStatusByAccount(Long paymentHistoryId, String paymentHistoryStatus) {
         PaymentHistory paymentHistory = this.paymentHistoryService.getPaymentHistory(paymentHistoryId);
         Requisition requisition = paymentHistory.getRequisition();
+        if (paymentHistory.getIsApproveByAccountManager().equalsIgnoreCase(AppConstants.accept))
+            return true;
         if (paymentHistoryStatus.equalsIgnoreCase(AppConstants.accept)) {
             paymentHistory.setIsApproveByAccountManager(AppConstants.accept);
             requisition.setPaidAmount(requisition.getPaidAmount() + paymentHistory.getAmount());

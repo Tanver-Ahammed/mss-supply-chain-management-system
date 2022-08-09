@@ -122,7 +122,7 @@ public class AccountController {
 
         Boolean isApproveByAccount = this.accountRequisitionService.
                 isApprovePaymentHistoryStatusByAccount(paymentHistoryId, paymentHistoryStatus);
-        return "redirect:/authority/account/requisitions";
+        return "redirect:/account/requisitions";
     }
 
 }

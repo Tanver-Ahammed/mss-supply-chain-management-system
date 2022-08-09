@@ -44,10 +44,13 @@
                         <td th:text="${paymentHistoryDTO.accountNo}"></td>
                         <td th:text="${paymentHistoryDTO.amount}"></td>
                         <td>
-                            <span th:if="${paymentHistoryDTO.approveByAccountManager == true}">
+                            <span th:if="${paymentHistoryDTO.isApproveByAccountManager == 'ACCEPT'}">
                                 <i class="fa fag fa-solid fa-check"></i>
                             </span>
-                            <span th:if="${paymentHistoryDTO.approveByAccountManager == false}">
+                            <span th:if="${paymentHistoryDTO.isApproveByAccountManager == 'PAUSE'}">
+                                <i class="fa fab fa-solid fa-plus"></i>
+                            </span>
+                            <span th:if="${paymentHistoryDTO.isApproveByAccountManager == 'REJECT'}">
                                 <i class="fa far fa-solid fa-xmark"></i>
                             </span>
                         </td>
