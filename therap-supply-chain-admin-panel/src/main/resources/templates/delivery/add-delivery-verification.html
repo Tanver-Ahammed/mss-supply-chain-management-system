@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="authority/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>MSS - Supply Chain Management System</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Enter Your Verification Code </h1>
+                <div>
+                    <p th:text="${message}" style="color: #318043; text-align: center"></p>
+                    <p th:text="${dangerMessage}" style="color: red; text-align: center"></p>
+                </div>
+                <div class="card-body">
+
+                    <!--blood donor form started....-->
+                    <form th:action="@{${'/delivery/requisition/verify/' + requisitionId}}"
+                          method="post" onsubmit="return amountFormValidator()">
+
+                        <!--payment amount div....-->
+                        <div class="mb-3">
+                            <label for="verificationCode" class="form-label"><b>Verification Code</b></label>
+                            <input
+                                    type="text"
+                                    id="verificationCode"
+                                    name="verificationCode"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="validationServer03FeedbackTransactionId"
+                            >
+                        </div>
+
+
+                        <!--student reset & submit div....-->
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" onclick="return registrationDealerIsConfirmed()" class="btn btn-success">
+                            Verify For Delivery
+                        </button>
+                    </form>
+                    <!--blood donor form started....-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

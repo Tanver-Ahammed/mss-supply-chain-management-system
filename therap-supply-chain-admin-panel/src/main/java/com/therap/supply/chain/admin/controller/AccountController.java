@@ -124,7 +124,7 @@ public class AccountController {
 
         Boolean isApproveByAccount = this.accountRequisitionService.
                 isApproveRequisitionStatusByAccount(requisitionId, accountStatus);
-        return "redirect:/authority/account/requisitions";
+        return "redirect:/account/requisitions";
     }
 
     @GetMapping(path = "/payment/histories")
