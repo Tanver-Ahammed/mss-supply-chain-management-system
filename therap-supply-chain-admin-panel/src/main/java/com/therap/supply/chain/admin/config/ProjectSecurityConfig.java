@@ -31,13 +31,14 @@ public class ProjectSecurityConfig {
 
         http
                 .csrf().disable()
-//                .cors().disable()
+                .cors().disable()
                 .authorizeHttpRequests((auth) -> auth
-                        .antMatchers("/authority/add", "/authority/all", "/authority/get",
-                                "/authority/edit", "/authority/image").hasAnyRole("MD")
-                        .antMatchers("/dealer/approver/**").hasAnyRole("DA")
-                        .antMatchers("/authority/login").permitAll()
-                        .antMatchers("/notices", "/contact").permitAll()
+                        .antMatchers("/md/**", "/admin/**", "/dealer/**").hasAnyRole("MD")
+                        .antMatchers("/approver//**", "/admin/**", "/dealer/**").hasAnyRole("DA")
+                        .antMatchers("/inventory/**", "/admin/**", "/dealer/**").hasAnyRole("IM")
+                        .antMatchers("/account/**", "/admin/**", "/dealer/**").hasAnyRole("AC")
+                        .antMatchers("/delivery/**", "/admin/**", "/dealer/**").hasAnyRole("DM")
+                        .antMatchers("/auth/**").permitAll()
                 )
                 .formLogin()
                 .loginPage("/auth/login")
