@@ -18,7 +18,8 @@
 <body>
 
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">MSS - Supply Chain Management System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -31,7 +32,7 @@
                     <a class="nav-link active" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMD" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMD" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         MD
                     </a>
@@ -41,7 +42,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInventory" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownInventory" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Inventory
                     </a>
@@ -58,7 +59,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDealerApprover" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownDealerApprover" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Approver
                     </a>
@@ -67,7 +68,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownAccount" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Account
                     </a>
@@ -81,16 +82,17 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDelivery" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownDelivery" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Delivery
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
-                        <li><a class="dropdown-item" th:href="@{/delivery/requisitions}">Requisition For Delivery</a></li>
+                        <li><a class="dropdown-item" th:href="@{/delivery/requisitions}">Requisition For Delivery</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDealer" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownDealer" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Dealer
                     </a>
@@ -101,7 +103,7 @@
             </ul>
             <ul class="sign_up_btn pull-right dn-smd mt20">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownProfile" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false" th:text="${authority.name}">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfile">

@@ -1,5 +1,10 @@
 body {
-    background: #e2e2e2 !important;
+    /*background: #e2e2e2 !important;*/
+    background: antiquewhite !important;
+}
+
+.nav-color {
+    background: #673ab7;
 }
 
 footer {
