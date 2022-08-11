@@ -1,5 +1,6 @@
 package com.therap.supply.chain.admin.dto;
 
+import com.therap.supply.chain.admin.entities.ProductHistory;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -48,6 +49,8 @@ public class ProductDTO {
     private boolean isEnable;
 
     private AttachmentDTO attachmentDTO;
+
+    private List<ProductHistoryDTO> productHistoryDTOS;
 
     private List<RequisitionProductHistoryDTO> requisitionProductHistoryDTOS;
 

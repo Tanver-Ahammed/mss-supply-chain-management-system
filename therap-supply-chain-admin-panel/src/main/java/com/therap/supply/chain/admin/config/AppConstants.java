@@ -25,5 +25,9 @@ public class AppConstants {
 
     public static final String reject = "REJECT";
 
+    public static final String add = "ADD";
+
+    public static final String sell = "SELL";
+
 
 }

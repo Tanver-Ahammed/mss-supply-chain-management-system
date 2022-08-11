@@ -45,6 +45,9 @@ public class Product {
     private Attachment attachment;
 
     @OneToMany(mappedBy = "product", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProductHistory> productHistories;
+
+    @OneToMany(mappedBy = "product", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RequisitionProductHistory> requisitionProductHistories;
 
 }

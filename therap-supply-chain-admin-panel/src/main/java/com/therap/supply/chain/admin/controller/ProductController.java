@@ -2,6 +2,7 @@ package com.therap.supply.chain.admin.controller;
 
 import com.therap.supply.chain.admin.dto.AuthorityDTO;
 import com.therap.supply.chain.admin.dto.ProductDTO;
+import com.therap.supply.chain.admin.dto.ProductHistoryDTO;
 import com.therap.supply.chain.admin.service.impl.AuthorityServiceImpl;
 import com.therap.supply.chain.admin.service.impl.FileServiceImpl;
 import com.therap.supply.chain.admin.service.impl.ProductServiceImpl;
@@ -153,6 +154,24 @@ public class ProductController {
         productDTO = this.productService.updateProduct(productId, productDTO, productImage);    // save the product database
         model.addAttribute("productDTO", new ProductDTO());
         return "redirect:/inventory/product/all/";
+    }
+
+    // get product history
+    @GetMapping(path = "/history/{productId}")
+    public String getAllHistoryByProduct(@PathVariable("productId") Long productId,
+                                         Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        List<ProductHistoryDTO> productHistoryDTOS = this.productService
+                .getAllProductHistoryByProductId(productId);
+
+        model.addAttribute("productHistoryDTOS", productHistoryDTOS);
+
+        return "product/show-product-history-by-id";
     }
 
     // get image

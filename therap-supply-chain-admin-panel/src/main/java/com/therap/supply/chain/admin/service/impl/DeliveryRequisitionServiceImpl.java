@@ -1,17 +1,18 @@
 package com.therap.supply.chain.admin.service.impl;
 
-import com.sun.mail.util.MailConnectException;
 import com.therap.supply.chain.admin.config.AppConstants;
 import com.therap.supply.chain.admin.dto.RequisitionDTO;
 import com.therap.supply.chain.admin.email.EmailSenderService;
+import com.therap.supply.chain.admin.entities.ProductHistory;
 import com.therap.supply.chain.admin.entities.Requisition;
+import com.therap.supply.chain.admin.entities.RequisitionProductHistory;
+import com.therap.supply.chain.admin.repository.ProductHistoryRepository;
 import com.therap.supply.chain.admin.repository.RequisitionRepository;
 import com.therap.supply.chain.admin.service.DeliveryRequisitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.swing.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +26,9 @@ public class DeliveryRequisitionServiceImpl implements DeliveryRequisitionServic
 
     @Autowired
     private RequisitionServiceImpl requisitionService;
+
+    @Autowired
+    private ProductHistoryRepository productHistoryRepository;
 
     @Autowired
     private EmailSenderService emailSenderService;
@@ -63,6 +67,22 @@ public class DeliveryRequisitionServiceImpl implements DeliveryRequisitionServic
         if (verificationCode.equals(requisition.getVerificationCode())) {
             requisition.setIsDelivered(AppConstants.accept);
             this.requisitionRepository.save(requisition);
+
+            // update product history
+            List<RequisitionProductHistory> rpHistories = requisition.getRequisitionProductHistories();
+            for (RequisitionProductHistory rpHistory : rpHistories) {
+                Long totalStockInInventory = rpHistory.getProduct().getProductHistories()
+                        .get(rpHistory.getProduct().getProductHistories().size() - 1).getStockInInventory();
+                // product history
+                ProductHistory productHistory = new ProductHistory();
+                productHistory.setStatus(AppConstants.sell);
+                productHistory.setDealerId(requisition.getDealer().getId());
+                productHistory.setUpdatedProduct(rpHistory.getQuantity());
+                productHistory.setStockInInventory(totalStockInInventory - rpHistory.getQuantity());
+                productHistory.setProduct(rpHistory.getProduct());
+                this.productHistoryRepository.save(productHistory);
+            }
+
             return true;
         }
         return false;

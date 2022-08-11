@@ -20,7 +20,9 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${'Name of Product: ' + productDTO.name}">Card title</h5>
                     <p class="card-text" th:text="${'Product Description: ' + productDTO.description}"></p>
-                    <p class="card-text" th:text="${'Product Price: ' + productDTO.price + ' Taka'}"></p>
+                    <p class="card-text" th:text="${'Product Total Price: ' + productDTO.price + ' Taka'}"></p>
+                    <p class="card-text" th:text="${'Product Discount: ' + productDTO.discount + ' %'}"></p>
+                    <p class="card-text" th:text="${'Product Discounted Price: ' + productDTO.discountPrice + ' Taka'}"></p>
                     <a th:if="${productDTO.stock > 0}" th:href="@{${'/dealer/cart/add/product/' + productDTO.id}}"
                        class="btn btn-success">Add Cart
                     </a>

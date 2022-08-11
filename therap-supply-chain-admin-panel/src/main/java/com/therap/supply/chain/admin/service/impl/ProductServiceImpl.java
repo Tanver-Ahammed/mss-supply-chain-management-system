@@ -1,12 +1,16 @@
 package com.therap.supply.chain.admin.service.impl;
 
+import com.therap.supply.chain.admin.config.AppConstants;
 import com.therap.supply.chain.admin.dto.AttachmentDTO;
 import com.therap.supply.chain.admin.dto.ProductDTO;
+import com.therap.supply.chain.admin.dto.ProductHistoryDTO;
 import com.therap.supply.chain.admin.email.EmailSenderService;
 import com.therap.supply.chain.admin.entities.Attachment;
 import com.therap.supply.chain.admin.entities.Dealer;
 import com.therap.supply.chain.admin.entities.Product;
+import com.therap.supply.chain.admin.entities.ProductHistory;
 import com.therap.supply.chain.admin.exception.ResourceNotFoundException;
+import com.therap.supply.chain.admin.repository.ProductHistoryRepository;
 import com.therap.supply.chain.admin.repository.ProductRepository;
 import com.therap.supply.chain.admin.service.ProductService;
 import org.modelmapper.ModelMapper;
@@ -37,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     private AttachmentServiceImpl attachmentService;
 
     @Autowired
-    private EmailSenderService emailSenderService;
+    private ProductHistoryRepository productHistoryRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -64,6 +68,15 @@ public class ProductServiceImpl implements ProductService {
         product.setDiscountPrice(product.getPrice() * (100 - product.getDiscount()) / 100);
 
         product = this.productRepository.save(product);
+
+        // product history
+        ProductHistory productHistory = new ProductHistory();
+        productHistory.setStatus(AppConstants.add);
+        productHistory.setDealerId(0L);
+        productHistory.setUpdatedProduct(product.getTotal());
+        productHistory.setStockInInventory(product.getTotal());
+        productHistory.setProduct(product);
+        this.productHistoryRepository.save(productHistory);
 
         return this.modelMapper.map(product, ProductDTO.class);
     }
@@ -125,7 +138,31 @@ public class ProductServiceImpl implements ProductService {
 
         product = this.productRepository.save(product);
 
+        if (product.getAddProduct() > 0) {
+            // product history
+            ProductHistory productHistory = new ProductHistory();
+            productHistory.setStatus(AppConstants.add);
+            productHistory.setUpdatedProduct(product.getAddProduct());
+            Long totalStockInInventory = product.getProductHistories()
+                    .get(product.getProductHistories().size() - 1).getStockInInventory();
+            productHistory.setStockInInventory(totalStockInInventory + product.getTotal());
+            productHistory.setDealerId(0L);
+            productHistory.setProduct(product);
+            this.productHistoryRepository.save(productHistory);
+        }
+
         return this.modelMapper.map(product, ProductDTO.class);
+
+    }
+
+    // get product histories by product id
+    public List<ProductHistoryDTO> getAllProductHistoryByProductId(Long productId) {
+        return this.getProduct(productId)
+                .getProductHistories()
+                .stream()
+                .map(productHistory -> this.modelMapper.map(productHistory, ProductHistoryDTO.class))
+                .sorted(Comparator.comparingLong(ProductHistoryDTO::getId))
+                .collect(Collectors.toList());
 
     }
 

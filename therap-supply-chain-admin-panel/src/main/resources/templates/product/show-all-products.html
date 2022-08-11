@@ -25,7 +25,6 @@
                         <p class="card-text" th:text="${'Product Price: ' + productDTO.price}"></p>
                         <p class="card-text" th:text="${'Stock of Product: ' + productDTO.stock}"></p>
                         <a th:href="@{${'/inventory/product/get/' + productDTO.id}}" class="btn btn-success">Details</a>
-                        <a href="#" class="btn btn-success">Add Cart</a>
                     </div>
                 </div>
                 <br>
