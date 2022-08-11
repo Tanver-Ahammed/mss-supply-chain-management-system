@@ -1,5 +1,5 @@
 body {
-    background: #e2e2e2 !important;
+    background: azure !important;
 }
 
 footer {
@@ -8,6 +8,7 @@ footer {
     bottom: 0;
     width: 100%;
     text-align: center;
+    background: #e2e2e2 !important;
 }
 
 .fa-stack[data-count]:after{
