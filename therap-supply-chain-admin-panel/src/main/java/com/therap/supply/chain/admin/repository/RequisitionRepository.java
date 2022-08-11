@@ -20,6 +20,8 @@ public interface RequisitionRepository extends JpaRepository<Requisition, Long> 
 
     List<Requisition> findByIsApproveByInventoryManagerAndIsApproveByAccountManager(String isInventory, String isAccount);
 
+    List<Requisition> findByIsApproveByAccountManagerAndIsPaid(String isAccount, boolean isPaid);
+
     List<Requisition> findByIsApproveByAccountManagerAndIsDelivered(String isAccount, String isDelivered);
 
 }

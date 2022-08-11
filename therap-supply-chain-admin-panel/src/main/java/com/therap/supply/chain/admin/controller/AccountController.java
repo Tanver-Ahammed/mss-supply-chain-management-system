@@ -92,6 +92,23 @@ public class AccountController {
 
     }
 
+    @GetMapping(path = "/rest/payment/requisitions")
+    public String getAllRequisitionRestForAccount(Model model, Principal principal) {
+        // get logged-in username
+        if (principal == null)
+            return "authority/login";
+        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+        model.addAttribute("authority", authority);
+
+        List<RequisitionDTO> requisitionDTOS = this.accountRequisitionService
+                .getAllRestPaymentRequisitionByForAccount();
+        model.addAttribute("requisitionDTOS", requisitionDTOS);
+        model.addAttribute("message", "");
+
+        return "account/show-all-requisition-rest-payment";
+
+    }
+
     @GetMapping(path = "requisition/{requisitionId}")
     public String getSingleRequisitionById(@PathVariable("requisitionId") Long requisitionId,
                                            Model model, Principal principal) {

@@ -59,7 +59,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownDealerApprover" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownDealerApprover"
+                       role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Approver
                     </a>
@@ -74,10 +75,14 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
                         <li><a class="dropdown-item" th:href="@{/account/requisitions}">Requisition For Approve</a></li>
+                        <li><a class="dropdown-item" th:href="@{/account/rest/payment/requisitions}"> Rest Payment Requisition
+                        </a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" th:href="@{/account/payment/histories}">Payment For Approve</a>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/account/payment/histories}">Payment For Approve</a>
                         </li>
                     </ul>
                 </li>

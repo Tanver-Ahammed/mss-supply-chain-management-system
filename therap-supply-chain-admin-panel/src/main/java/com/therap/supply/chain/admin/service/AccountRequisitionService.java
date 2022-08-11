@@ -9,6 +9,8 @@ public interface AccountRequisitionService {
 
     List<RequisitionDTO> getAllRequisitionByForAccount();
 
+    List<RequisitionDTO> getAllRestPaymentRequisitionByForAccount();
+
     Boolean isApproveRequisitionStatusByAccount(Long requisitionId, String accountStatus);
 
     Boolean isApprovePaymentHistoryStatusByAccount(Long paymentHistoryId, String paymentHistoryStatus);

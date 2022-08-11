@@ -44,6 +44,16 @@ public class AccountRequisitionServiceImpl implements AccountRequisitionService 
     }
 
     @Override
+    public List<RequisitionDTO> getAllRestPaymentRequisitionByForAccount() {
+        return this.requisitionRepository
+                .findByIsApproveByAccountManagerAndIsPaid(AppConstants.accept, false)
+                .stream()
+                .map(requisition -> this.requisitionService.requisitionToRequisitionDTO(requisition))
+                .sorted(Comparator.comparingLong(RequisitionDTO::getId))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Boolean isApproveRequisitionStatusByAccount(Long requisitionId, String accountStatus) {
         Requisition requisition = this.requisitionService.getRequisition(requisitionId);
         if (accountStatus.equalsIgnoreCase(AppConstants.accept))
