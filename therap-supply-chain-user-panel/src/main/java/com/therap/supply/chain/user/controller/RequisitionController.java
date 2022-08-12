@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(path = "/dealer/requisition")
+@RequestMapping(path = "/dealer/auth/requisition")
 public class RequisitionController {
 
     @Autowired

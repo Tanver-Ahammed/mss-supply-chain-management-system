@@ -21,7 +21,7 @@ import java.security.Principal;
  */
 
 @Controller
-@RequestMapping(path = "/dealer/cart")
+@RequestMapping(path = "/dealer/auth/cart")
 public class DealerProductsCartController {
 
     @Autowired
@@ -84,7 +84,7 @@ public class DealerProductsCartController {
         model.addAttribute("totalItemProduct", this.dealerProductsCartService
                 .getTotalItemProduct(dealer.getId()));
 
-        return "redirect:/dealer/cart";
+        return "redirect:/dealer/auth/cart";
     }
 
     @GetMapping(path = "/checkout")
@@ -125,7 +125,7 @@ public class DealerProductsCartController {
         this.dealerProductsCartService.checkoutCart(historyBindDTO, requisitionId);
         model.addAttribute("totalItemProduct", this.dealerProductsCartService
                 .getTotalItemProduct(dealer.getId()));
-        return "redirect:/dealer/cart";
+        return "redirect:/dealer/auth/cart";
     }
 
     @GetMapping(path = "/submit/{requisitionId}")

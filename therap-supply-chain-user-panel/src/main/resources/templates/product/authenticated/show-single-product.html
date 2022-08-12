@@ -23,7 +23,7 @@
                     <p class="card-text" th:text="${'Product Total Price: ' + productDTO.price + ' Taka'}"></p>
                     <p class="card-text" th:text="${'Product Discount: ' + productDTO.discount + ' %'}"></p>
                     <p class="card-text" th:text="${'Product Discounted Price: ' + productDTO.discountPrice + ' Taka'}"></p>
-                    <a th:if="${productDTO.stock > 0}" th:href="@{${'/dealer/cart/add/product/' + productDTO.id}}"
+                    <a th:if="${productDTO.stock > 0}" th:href="@{${'/dealer/auth/cart/add/product/' + productDTO.id}}"
                        class="btn btn-success">Add Cart
                     </a>
                     <a th:if="${productDTO.stock == 0}" th:href="@{#}"

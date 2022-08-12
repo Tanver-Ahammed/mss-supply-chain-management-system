@@ -20,7 +20,7 @@
                 <div class="card-body">
 
                     <!--blood donor form started....-->
-                    <form th:action="@{/dealer/cart/checkout/submit/}"
+                    <form th:action="@{/dealer/auth/cart/checkout/submit/}"
                           th:object="${requisitionProductHistoryDTOS}" method="post"
                           enctype="multipart/form-data" onsubmit="return dealerFormValidator()">
                         <input hidden name="requisitionId" th:value="${requisitionId}">
@@ -61,7 +61,7 @@
                                         </td>
                                         <td th:text="${requisitionProductHistory.quantity * requisitionProductHistory.price}"></td>
                                         <td>
-                                            <a th:href="@{${'/dealer/cart/requisition/' + requisitionId + '/delete/' + requisitionProductHistory.id}}">
+                                            <a th:href="@{${'/dealer/auth/cart/requisition/' + requisitionId + '/delete/' + requisitionProductHistory.id}}">
                                                 <i class="far fa-solid fa-trash"></i>
                                             </a>
                                         </td>

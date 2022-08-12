@@ -19,7 +19,7 @@
                 <div class="card-body">
 
                     <!--blood donor form started....-->
-                    <form th:action="@{${'/dealer/payment/save/' + requisitionId}}"
+                    <form th:action="@{${'/dealer/auth/payment/save/' + requisitionId}}"
                           th:object="${paymentHistoryDTO}" method="post"
                           onsubmit="return amountFormValidator()">
 

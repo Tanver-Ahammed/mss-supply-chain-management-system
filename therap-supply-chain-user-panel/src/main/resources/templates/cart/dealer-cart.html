@@ -52,7 +52,7 @@
                         <td th:text="${requisitionProductHistory.quantity *
                             requisitionProductHistory.price}"></td>
                         <td>
-                            <a th:href="@{${'/dealer/cart/requisition/' + requisitionDTO.id + '/delete/' + requisitionProductHistory.id}}">
+                            <a th:href="@{${'/dealer/auth/cart/requisition/' + requisitionDTO.id + '/delete/' + requisitionProductHistory.id}}">
                                 <i class="far fa-solid fa-trash"></i>
                             </a>
                         </td>
@@ -67,12 +67,12 @@
                 </tbody>
             </table>
 
-            <a th:if="${totalItemProduct > 0}" th:href="@{${'/dealer/cart/checkout/'}}" +
+            <a th:if="${totalItemProduct > 0}" th:href="@{${'/dealer/auth/cart/checkout/'}}" +
                type="submit" class="btn btn-primary">Checkout Product Cart
             </a>
             &nbsp
             <a th:if="${requisitionDTO.requisitionProductHistoryDTOS.size() > 0}"
-               th:href=" @{${'/dealer/cart/submit/' + requisitionDTO.id}}" type="submit"
+               th:href=" @{${'/dealer/auth/cart/submit/' + requisitionDTO.id}}" type="submit"
                class="btn btn-success">Submit Product Cart
             </a>
         </div>

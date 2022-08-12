@@ -38,7 +38,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" th:href="@{/dealer/requisition/all}">
+                            <a class="dropdown-item" th:href="@{/dealer/auth/requisition/all}">
                                 My Requisitions
                             </a>
                         </li>
@@ -56,7 +56,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li>
-                    <a th:href="@{/dealer/cart/}" class="btn flatiron-user" data-toggle="modal">
+                    <a th:href="@{/dealer/auth/cart/}" class="btn flatiron-user" data-toggle="modal">
                         <span th:data-count="${totalItemProduct}" class="fa-stack fa-solid fa-cart-shopping"
                               style="font-size: 20px">
                         </span>
@@ -70,7 +70,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
                         <li class="list-inline-item list_s">
-                            <a th:href="@{/dealer/my/profile}" class="btn flatiron-user" data-toggle="modal">
+                            <a th:href="@{/dealer/auth/my/profile}" class="btn flatiron-user" data-toggle="modal">
                                 <span th:text="Profile" class="fa-solid fa-user"></span></a>
                         </li>
                         <li class="list-inline-item list_s">

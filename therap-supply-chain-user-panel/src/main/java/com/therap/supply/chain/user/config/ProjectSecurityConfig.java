@@ -31,8 +31,8 @@ public class ProjectSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((auth) -> auth
-                        .antMatchers("/dealer/adda").authenticated()
-                        .antMatchers("/notices", "/contact").permitAll()
+                        .antMatchers("/dealer/auth/**").authenticated()
+                        .antMatchers("/dealer/**").permitAll()
                 )
                 .formLogin()
                 .loginPage("/dealer/login");

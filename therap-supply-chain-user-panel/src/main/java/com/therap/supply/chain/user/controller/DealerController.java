@@ -101,7 +101,7 @@ public class DealerController {
     }
 
     // view profile
-    @GetMapping(path = "/my/profile")
+    @GetMapping(path = "/auth/my/profile")
     public String myProfile(Principal principal, Model model) {
         // get logged-in username
         if (principal == null)
@@ -122,7 +122,7 @@ public class DealerController {
 
 
     // edit dealer details
-    @GetMapping(path = "/edit/my/profile")
+    @GetMapping(path = "/auth/edit/my/profile")
     public String editDealer(Principal principal, Model model) {
 
         // get logged-in username
@@ -143,7 +143,7 @@ public class DealerController {
     }
 
     // update dealer
-    @PostMapping("/update")
+    @PostMapping("/auth/update")
     public String updateDealerSuccess(@Valid @ModelAttribute(value = "dealerDTO") DealerDTO dealerDTO, BindingResult result,
                                       @RequestParam(value = "dealerImage", required = false) MultipartFile dealerImage,
                                       Model model, Principal principal) throws IOException {

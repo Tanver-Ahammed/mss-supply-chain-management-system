@@ -14,7 +14,7 @@
 <section>
 
     <div class="container" style="text-align: center">
-        <div class="row row-cols-1">
+        <div class="row row-cols-3">
 
             <h1 style="text-align: center">
                 <b th:text="${'REQ-' + requisitionDTO.id}">
@@ -63,12 +63,13 @@
                 </tbody>
             </table>
 
-            <a th:if="${totalItemProduct > 0}" th:href="@{${'/dealer/cart/checkout/'}}" +
+            <a th:if="${totalItemProduct > 0 && requisitionDTO.submittedByDealer == false}"
+               th:href="@{${'/dealer/auth/cart/checkout/'}}" +
                type="submit" class="btn btn-primary">Checkout Product Cart
             </a>
             &nbsp
-            <a th:if="${totalItemProduct > 0}"
-               th:href=" @{${'/dealer/cart/submit/' + requisitionDTO.id}}" type="submit"
+            <a th:if="${totalItemProduct > 0 && requisitionDTO.submittedByDealer == false}"
+               th:href=" @{${'/dealer/auth/cart/submit/' + requisitionDTO.id}}" type="submit"
                class="btn btn-success">Submit Product Cart
             </a>
         </div>

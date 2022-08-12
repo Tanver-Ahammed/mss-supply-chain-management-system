@@ -32,6 +32,7 @@
                     <th scope="col">Requisition Date</th>
                     <th scope="col">Total Price</th>
                     <th scope="col">Paid Amount</th>
+                    <th scope="col">Is Delivered</th>
                     <th scope="col">Paid History</th>
                     <th scope="col">Paid Status</th>
                 </tr>
@@ -41,7 +42,7 @@
                     <tr>
                         <th scope="row">
                             <b>
-                                <a th:href="@{${'/dealer/requisition/' + requisitionDTO.id}}"
+                                <a th:href="@{${'/dealer/auth/requisition/' + requisitionDTO.id}}"
                                    th:text="${'REQ-' + requisitionDTO.id}"
                                    class="btn btn-info">
                                 </a>
@@ -51,7 +52,18 @@
                         <td th:text="${requisitionDTO.totalAmountPrice}"></td>
                         <td th:text="${requisitionDTO.paidAmount}"></td>
                         <td>
-                            <a th:href="@{${'/dealer/payment/requisition/by/' + requisitionDTO.id}}"
+                            <span th:if="${requisitionDTO.isDelivered == 'ACCEPT'}">
+                                <i class="fa fag fa-solid fa-check"></i>
+                            </span>
+                            <span th:if="${requisitionDTO.isDelivered == 'PAUSE'}">
+                                <i class="fa fab fa-solid fa-plus"></i>
+                            </span>
+                            <span th:if="${requisitionDTO.isDelivered == 'REJECT'}">
+                                <i class="fa far fa-solid fa-xmark"></i>
+                            </span>
+                        </td>
+                        <td>
+                            <a th:href="@{${'/dealer/auth/payment/requisition/by/' + requisitionDTO.id}}"
                                th:text="${'Show'}"
                                class="btn btn-primary">
                             </a>
@@ -68,7 +80,7 @@
                                class="btn btn-info">
                             </a>
                             <a th:if="${requisitionDTO.paid == false && requisitionDTO.isApproveByInventoryManager == 'ACCEPT'}"
-                               th:href="@{${'/dealer/payment/requisition/' + requisitionDTO.id}}"
+                               th:href="@{${'/dealer/auth/payment/requisition/' + requisitionDTO.id}}"
                                th:text="${'Click For Payment'}"
                                class="btn btn-danger">
                             </a>

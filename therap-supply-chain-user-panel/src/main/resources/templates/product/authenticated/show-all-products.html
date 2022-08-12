@@ -25,7 +25,7 @@
                         <p class="card-text" th:text="${'Product Price: ' + productDTO.price}"></p>
                         <p class="card-text" th:text="${'Stock of Product: ' + productDTO.stock}"></p>
                         <a th:href="@{${'/product/get/' + productDTO.id}}" class="btn btn-success">Details</a>
-                        <a th:if="${productDTO.stock > 0}" th:href="@{${'/dealer/cart/add/product/' + productDTO.id}}"
+                        <a th:if="${productDTO.stock > 0}" th:href="@{${'/dealer/auth/cart/add/product/' + productDTO.id}}"
                            class="btn btn-success">Add Cart
                         </a>
                         <a th:if="${productDTO.stock == 0}" th:href="@{#}"

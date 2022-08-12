@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(path = "/dealer/payment")
+@RequestMapping(path = "/dealer/auth/payment")
 public class PaymentController {
 
     @Autowired
