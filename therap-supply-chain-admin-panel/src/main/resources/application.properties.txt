@@ -1,0 +1,35 @@
+server.port=8081
+
+# configure dataSource
+spring.datasource.url=jdbc:postgresql://localhost:5432/supply_chain?useSSL=false&allowPublicKeyRetrieval=true
+spring.datasource.username=postgres
+spring.datasource.password=Tanver@123
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# configure hibernate properties
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL95Dialect
+spring.jpa.properties.hibernate.show_sql=true
+spring.jpa.show-sql = true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+logging.level.org.hibernate.SQLQuery=debug
+
+# image upload
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=10MB
+project.image=images/
+
+# configure gmail
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=Your Gmail
+spring.mail.password=Your Gmail Password
+
+spring.mail.properties.mail.debug=true
+spring.mail.properties.mail.transport.protocol=smtp
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+# swagger
+spring.mvc.pathmatch.matching-strategy=ant_path_matcher

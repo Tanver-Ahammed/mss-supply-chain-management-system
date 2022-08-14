@@ -17,16 +17,13 @@
             <div class="card" style="width: 40rem; text-align: center">
                 <img th:src="@{${'/inventory/product/image/' + productDTO.getAttachmentDTO().getAttachmentFileName()}}"
                      class="single-card-img-top" alt="Not Available Image">
-                <span>
-                    <a th:href="@{${'/inventory/product/history/' + productDTO.id}}"
-                       th:text="${'Product History'}"
-                       type="submit" class="btn btn-success"></a>
-                </span>
+
                 <div class="card-body">
                     <h5 class="card-title" th:text="${'Name of Product: ' + productDTO.name}">Card title</h5>
                     <p class="card-text" th:text="${'Product Description: ' + productDTO.description}"></p>
                     <p class="card-text" th:text="${'Product Price: ' + productDTO.price + ' Taka'}"></p>
-                    <a th:href="@{${'/product/edit/' + productDTO.id}}" class="btn btn-primary">Update Product</a>
+                    <a th:href="@{${'/inventory/product/history/' + productDTO.id}}" class="btn btn-success">Product History</a>
+                    <a th:href="@{${'/inventory/product/edit/' + productDTO.id}}" class="btn btn-primary">Update Product</a>
                 </div>
             </div>
 
