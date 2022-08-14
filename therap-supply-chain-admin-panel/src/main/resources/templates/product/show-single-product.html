@@ -21,6 +21,7 @@
                     <h5 class="card-title" th:text="${'Name of Product: ' + productDTO.name}">Card title</h5>
                     <p class="card-text" th:text="${'Product Description: ' + productDTO.description}"></p>
                     <p class="card-text" th:text="${'Product Price: ' + productDTO.price + ' Taka'}"></p>
+                    <p class="card-text" th:text="${'Product Stock: ' + productDTO.stock + ' Bags'}"></p>
                     <a th:href="@{${'/inventory/product/edit/' + productDTO.id}}" class="btn btn-primary">Update Product</a>
                 </div>
             </div>

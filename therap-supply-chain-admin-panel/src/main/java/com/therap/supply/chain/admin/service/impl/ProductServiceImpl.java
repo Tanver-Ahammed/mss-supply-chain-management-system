@@ -145,7 +145,7 @@ public class ProductServiceImpl implements ProductService {
             productHistory.setUpdatedProduct(product.getAddProduct());
             Long totalStockInInventory = product.getProductHistories()
                     .get(product.getProductHistories().size() - 1).getStockInInventory();
-            productHistory.setStockInInventory(totalStockInInventory + product.getTotal());
+            productHistory.setStockInInventory(totalStockInInventory + product.getAddProduct());
             productHistory.setDealerId(0L);
             productHistory.setProduct(product);
             this.productHistoryRepository.save(productHistory);

@@ -241,6 +241,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         authority.setVerificationCode(RandomString.make(64));
         authority.setBloodGroup(authorityDTO.getBloodGroup());
         authority.setAddress(authorityDTO.getAddress());
+        authority.setActivity(authorityDTO.getActivity());
         return this.modelMapper.map(this.authorityRepository.save(authority), AuthorityDTO.class);
     }
 

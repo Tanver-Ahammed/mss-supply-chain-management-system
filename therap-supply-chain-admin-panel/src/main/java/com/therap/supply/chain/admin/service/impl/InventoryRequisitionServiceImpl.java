@@ -53,7 +53,7 @@ public class InventoryRequisitionServiceImpl implements InventoryRequisitionServ
 
     // send email for verification
     private void sendVerificationEmail(Requisition requisition, String siteURL) {
-        siteURL += "/dealer/payment/requisition/" + requisition.getId();
+        siteURL += "/dealer/auth/payment/requisition/" + requisition.getId();
         String subject;
         String emailContent = "<p><b>Dear " + requisition.getDealer().getName() + ",</b></p>";
 

@@ -3,7 +3,7 @@ server.port=8081
 # configure dataSource
 spring.datasource.url=jdbc:postgresql://localhost:5432/supply_chain?useSSL=false&allowPublicKeyRetrieval=true
 spring.datasource.username=postgres
-spring.datasource.password=Tanver@123
+spring.datasource.password=Your DB Password
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # configure hibernate properties
