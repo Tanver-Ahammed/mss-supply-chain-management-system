@@ -44,4 +44,7 @@ Then Click the link below. See all the Swagger UI.
 * [Supply-Chain-Admin-Panel Swagger Swagger-UI](http://localhost:8081/swagger-ui/)
 * [Supply-Chain-User-Panel Swagger Swagger-UI](http://localhost:8082/swagger-ui/)
 
+## Docs
+
+* [Requirement, CV](https://github.com/Tanver-Ahammed/therap-supply-chain-management-system/Docs)
 
