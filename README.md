@@ -2,7 +2,7 @@
 
 ## Hi, I am Md. Tanver Ahammed
 
-# Therap-Supply-Chain-Management-System
+# MSS-Supply-Chain-Management-System
 
 ## The project has two part
 
@@ -12,7 +12,6 @@
 
 **Notes:**
 I am learning a lot while working on this project and my coding and debugging skills are improving.
-Thanks for Therap BD Ltd (JavaFest-2022).
 
 ## Technology:
 
@@ -45,8 +44,6 @@ Then Click the link below. See all the Swagger UI.
 * [Supply-Chain-User-Panel Swagger Swagger-UI](http://localhost:8082/swagger-ui/)
 
 ## Docs
-
-* [](https://github.com/Tanver-Ahammed/therap-supply-chain-management-system/tree/main/Docs)
 
 <h1><a href="https://github.com/Tanver-Ahammed/therap-supply-chain-management-system/tree/main/Docs">
 Requirement, CV
