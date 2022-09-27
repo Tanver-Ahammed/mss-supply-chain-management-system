@@ -1,0 +1,5 @@
+1,ROLE_MD,Managing Director
+2,ROLE_DA,Dealer Approver
+3,ROLE_IM,Inventory Manager
+4,ROLE_AC,Account Manager
+5,ROLE_DM,Delivery Manager
