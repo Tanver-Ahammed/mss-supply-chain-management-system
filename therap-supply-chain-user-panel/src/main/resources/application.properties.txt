@@ -1,4 +1,4 @@
-server.port=8081
+server.port=8082
 
 # configure dataSource
 spring.datasource.url=jdbc:postgresql://localhost:5432/supply_chain?useSSL=false&allowPublicKeyRetrieval=true

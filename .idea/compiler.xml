@@ -11,10 +11,6 @@
         <module name="therap-supply-chain-user-panel" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="therap-supply-chain-admin-panel" target="11" />
-      <module name="therap-supply-chain-user-panel" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
