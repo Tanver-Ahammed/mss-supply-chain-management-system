@@ -4,7 +4,7 @@
 
 # MSS-Supply-Chain-Management-System
 
-## The project has two part
+## The project has two parts
 
 ### 1. Admin Panel
 
