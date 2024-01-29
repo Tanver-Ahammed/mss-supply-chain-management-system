@@ -42,12 +42,18 @@ public class MDController {
     @Value("${project.image}")
     private String path;
 
+    private AuthorityDTO authority;
+
+    @ModelAttribute
+    public void setAuthorityDTOIfLoggedIn(Principal principal) {
+        authority =  this.authorityService.getAuthorityDTOIfLoggedIn(principal);
+    }
+
     @GetMapping(path = "/add")
     public String addAuthority(Principal principal, Model model) {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         Set<RoleDTO> roleDTOS = this.roleService.getAllRoles();
@@ -65,7 +71,6 @@ public class MDController {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         // passing role
@@ -108,7 +113,6 @@ public class MDController {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         // send all roles
@@ -135,7 +139,6 @@ public class MDController {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         // send all roles
@@ -161,7 +164,6 @@ public class MDController {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         // is controller managing director
@@ -201,7 +203,6 @@ public class MDController {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         AuthorityDTO authorityDTO = this.authorityService.getSingleAuthorityById(authorityId);
@@ -222,7 +223,6 @@ public class MDController {
         // get logged-in username
         if (principal == null)
             return "authority/login";
-        AuthorityDTO authority = this.authorityService.getAuthorityDTOIfLoggedIn(principal);
         model.addAttribute("authority", authority);
 
         if (result.hasErrors()) {
