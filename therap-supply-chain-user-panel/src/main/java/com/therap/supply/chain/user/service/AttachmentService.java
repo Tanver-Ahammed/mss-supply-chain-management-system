@@ -17,4 +17,6 @@ public interface AttachmentService {
 
     List<AttachmentDTO> addAttachments(MultipartFile[] multipartFiles) throws IOException;
 
+    AttachmentDTO addSingleAttachment(MultipartFile multipartFile) throws IOException;
+
 }

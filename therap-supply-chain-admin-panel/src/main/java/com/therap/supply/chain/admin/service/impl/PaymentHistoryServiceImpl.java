@@ -1,6 +1,7 @@
 package com.therap.supply.chain.admin.service.impl;
 
 import com.therap.supply.chain.admin.config.AppConstants;
+import com.therap.supply.chain.admin.dto.AttachmentDTO;
 import com.therap.supply.chain.admin.dto.PaymentHistoryDTO;
 import com.therap.supply.chain.admin.entities.PaymentHistory;
 import com.therap.supply.chain.admin.entities.Requisition;
@@ -54,7 +55,11 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 
     @Override
     public PaymentHistoryDTO getPaymentHistoryById(Long paymentHistoryId) {
-        return this.modelMapper.map(this.getPaymentHistory(paymentHistoryId), PaymentHistoryDTO.class);
+        PaymentHistory paymentHistory = this.getPaymentHistory(paymentHistoryId);
+        PaymentHistoryDTO paymentHistoryDTO = this.modelMapper.map(paymentHistory, PaymentHistoryDTO.class);
+        if (paymentHistory.getAttachment() != null)
+            paymentHistoryDTO.setAttachmentDTO(this.modelMapper.map(paymentHistory.getAttachment(), AttachmentDTO.class));
+        return paymentHistoryDTO;
     }
 
     // get payment history

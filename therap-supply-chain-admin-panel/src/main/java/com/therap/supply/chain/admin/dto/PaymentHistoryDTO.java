@@ -34,4 +34,6 @@ public class PaymentHistoryDTO {
 
     private RequisitionDTO requisitionDTO;
 
+    private AttachmentDTO attachmentDTO;
+
 }

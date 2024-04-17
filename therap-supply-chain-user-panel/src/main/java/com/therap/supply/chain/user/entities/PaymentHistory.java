@@ -41,4 +41,7 @@ public class PaymentHistory {
     @JoinColumn(name = "requisition_id_fk", referencedColumnName = "id")
     private Requisition requisition;
 
+    @OneToOne(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Attachment attachment;
+
 }

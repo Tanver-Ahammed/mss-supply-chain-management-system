@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -61,10 +63,10 @@ public class PaymentController {
     }
 
     @PostMapping(path = "/save/{requisitionId}")
-    public String savePayment(@Valid @ModelAttribute("paymentHistoryDTO") PaymentHistoryDTO paymentHistoryDTO,
-                              BindingResult result,
+    public String savePayment(@Valid @ModelAttribute("paymentHistoryDTO") PaymentHistoryDTO paymentHistoryDTO, BindingResult result,
+                              @RequestParam(value = "paymentImage", required = false) MultipartFile paymentImage,
                               @PathVariable("requisitionId") Long requisitionId,
-                              Model model, Principal principal) {
+                              Model model, Principal principal) throws IOException {
         // get logged-in username
         if (principal == null)
             return "dealer/login";
@@ -76,7 +78,7 @@ public class PaymentController {
             return "payment/add-payment";
         }
 
-        paymentHistoryDTO = this.paymentHistoryService.savePayment(requisitionId, paymentHistoryDTO);
+        paymentHistoryDTO = this.paymentHistoryService.savePayment(requisitionId, paymentHistoryDTO, paymentImage);
         if (paymentHistoryDTO != null)
             model.addAttribute("message", "Your Payment Submit Successfully...");
         return "payment/add-payment";

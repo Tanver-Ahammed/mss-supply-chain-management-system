@@ -21,7 +21,7 @@
                     <!--blood donor form started....-->
                     <form th:action="@{${'/dealer/auth/payment/save/' + requisitionId}}"
                           th:object="${paymentHistoryDTO}" method="post"
-                          onsubmit="return amountFormValidator()">
+                          onsubmit="return amountFormValidator()" enctype="multipart/form-data">
 
                         <!--payment medium div....-->
                         <div class=" mb-3">
@@ -129,6 +129,19 @@
                                     id="validationServer03FeedbackAmount"
                                     class="invalid-feedback">
                             </div>
+                        </div>
+
+                        <!--payment receipt image div-->
+                        <div class="mb-3">
+                            <label for="paymentImage" class="form-label">Payment's Image</label>
+                            <input
+                                    type="file"
+                                    id="paymentImage"
+                                    name="paymentImage"
+                                    accept="image/*"
+                                    required="required"
+                                    class="form-control"
+                                    aria-describedby="emailHelp">
                         </div>
 
 

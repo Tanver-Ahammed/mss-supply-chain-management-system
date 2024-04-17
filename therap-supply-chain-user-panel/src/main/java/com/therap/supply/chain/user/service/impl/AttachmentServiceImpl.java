@@ -59,6 +59,22 @@ public class AttachmentServiceImpl implements AttachmentService {
         return attachmentDTOS;
     }
 
+    @Override
+    public AttachmentDTO addSingleAttachment(MultipartFile multipartFile) throws IOException {
+        if (Objects.equals(multipartFile.getOriginalFilename(), ""))
+            return null;
+        AttachmentDTO attachmentDTO = new AttachmentDTO();
+        String originalFileName = this.fileService.uploadImage(path, multipartFile);
+        attachmentDTO.setAttachmentFileName(originalFileName);
+
+        String extension = FilenameUtils.getExtension(originalFileName);
+        attachmentDTO.setAttachmentType(extension);
+
+        attachmentDTO.setAttachmentPath(path);
+
+        return attachmentDTO;
+    }
+
     // attachment to attachmentDTO
     public AttachmentDTO attachmentToAttachmentDTO(Attachment attachment) {
         return this.modelMapper.map(attachment, AttachmentDTO.class);

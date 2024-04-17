@@ -94,6 +94,13 @@
                                 aria-label="Default"
                                 aria-describedby="inputGroup-sizing-default">
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Payment Receipt</span>
+                        </div>
+<!--                        <a th:href="@{${'/dealer/image/' + paymentHistoryDTO.attachmentDTO.attachmentFileName}}"-->
+<!--                           class="btn btn-primary">Click Here to Showing NID</a>-->
+                    </div>
 
                     <span th:if="${paymentHistoryDTO.isApproveByAccountManager} == 'PAUSE'">
                         <a th:href=" @{${'/account/payment/history/accept/' + paymentHistoryDTO.id}}"
