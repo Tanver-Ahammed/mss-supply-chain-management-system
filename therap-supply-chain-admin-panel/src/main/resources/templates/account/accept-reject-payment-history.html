@@ -98,8 +98,15 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Payment Receipt</span>
                         </div>
-<!--                        <a th:href="@{${'/dealer/image/' + paymentHistoryDTO.attachmentDTO.attachmentFileName}}"-->
-<!--                           class="btn btn-primary">Click Here to Showing NID</a>-->
+                        <a th:if="${paymentHistoryDTO.attachmentDTO} != null"
+                           th:href="@{${'/dealer/image/' + paymentHistoryDTO.attachmentDTO.attachmentFileName}}"
+                           class="btn btn-info form-control">Please, Click Here to Downloading and Showing Payment Receipt.
+                        </a>
+                        <a th:if="${paymentHistoryDTO.attachmentDTO} == null"
+                           disabled=""
+                           class="btn btn-info form-control">Dealer don't uploaded Money Receipt.
+                        </a>
+
                     </div>
 
                     <span th:if="${paymentHistoryDTO.isApproveByAccountManager} == 'PAUSE'">
