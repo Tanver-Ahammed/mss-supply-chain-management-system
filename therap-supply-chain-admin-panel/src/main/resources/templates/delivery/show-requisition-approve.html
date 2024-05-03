@@ -14,12 +14,17 @@
 <section>
 
     <div class="container" style="text-align: center">
+        <h1 th:text="${'Name: ' + requisitionDTO.dealerDTO.name}"></h1>
+        <p th:text="${'Address: ' + requisitionDTO.dealerDTO.address}"></p>
+        <p th:text="${'Contatc: ' + requisitionDTO.dealerDTO.contact}"></p>
+        <p th:text="${'Email: ' + requisitionDTO.dealerDTO.email}"></p>
+        <p th:text="${'Req Id: ' + requisitionDTO.id}"></p>
         <div class="row row-cols-3">
 
-            <h1 style="text-align: center">
+            <!--<h1 style="text-align: center">
                 <b th:text="${'REQ-' + requisitionDTO.id}">
                 </b>
-            </h1>
+            </h1>-->
             <div>
                 <p th:text="${message}" style="color: #318043; text-align: center"></p>
                 <p th:text="${dangerMessage}" style="color: red; text-align: center"></p>
@@ -45,8 +50,8 @@
                         <th scope="row" th:text="${'PROD-' + requisitionProductHistory.productDTO.id}"></th>
                         <td>
                             <b>
-                                <a th:href="@{${'/product/get/' + requisitionProductHistory.productDTO.id}}"
-                                   th:text="${requisitionProductHistory.productDTO.name}">
+                                <a th:href="@{${'http://localhost:8082/product/get/' + requisitionProductHistory.productDTO.id}}"
+                                   target="_blank" th:text="${requisitionProductHistory.productDTO.name}">
                                 </a>
                             </b>
                         </td>
@@ -127,7 +132,16 @@
                 </tbody>
             </table>
         </div>
+        <button class="btn-success btn-lg" id="printButton">Print The Receipt</button>
     </div>
+
+    <script>
+        // Add event listener to the print button
+        document.getElementById('printButton').addEventListener('click', function () {
+            // Call window.print() to trigger the print dialog
+            window.print();
+        });
+    </script>
 
     <br><br><br>
 
