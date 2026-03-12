@@ -1,12 +1,8 @@
-version: "3.9"
-
 services:
   mss_sc_admin_app:
     container_name: mss_sc_admin_app
-#    build: .
-#    image: spring_boot_crud
     build:
-      context: .
+      context: ./therap-supply-chain-admin-panel
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
@@ -16,6 +12,24 @@ services:
       - spring.datasource.password=12345
     depends_on:
       - postgres_db
+    networks:
+      - mss_hms_network
+
+  mss_sc_user_app:
+    container_name: mss_sc_user_app
+    build:
+      context: ./therap-supply-chain-user-panel
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres_db:5432/supply_chain
+      - spring.datasource.username=postgres
+      - spring.datasource.password=12345
+    depends_on:
+      - postgres_db
+    networks:
+      - mss_hms_network
 
   postgres_db:
     container_name: postgres_db
@@ -28,9 +42,8 @@ services:
       POSTGRES_DB: mss_hms
     volumes:
       - C:\Users\ASUS\Documents\Software\Backup-DB\postgres:/var/lib/postgresql/data
-
-volumes:
-  pg-data: { }
+    networks:
+      - mss_hms_network
 
 networks:
   mss_hms_network:
