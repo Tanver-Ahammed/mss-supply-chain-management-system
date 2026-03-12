@@ -7,11 +7,12 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - spring.datasource.url=jdbc:postgresql://postgres_db:5432/supply_chain
-      - spring.datasource.username=postgres
-      - spring.datasource.password=12345
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:5432/supply_chain
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
     depends_on:
-      - postgres_db
+      postgres_db:
+        condition: service_healthy
     networks:
       - mss_hms_network
 
@@ -23,11 +24,12 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - spring.datasource.url=jdbc:postgresql://postgres_db:5432/supply_chain
-      - spring.datasource.username=postgres
-      - spring.datasource.password=12345
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:5432/supply_chain
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
     depends_on:
-      - postgres_db
+      postgres_db:
+        condition: service_healthy
     networks:
       - mss_hms_network
 
@@ -39,11 +41,19 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: mss_hms
+      POSTGRES_DB: supply_chain
     volumes:
-      - C:\Users\ASUS\Documents\Software\Backup-DB\postgres:/var/lib/postgresql/data
+      - supply-chain-vol:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d supply_chain"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - mss_hms_network
+
+volumes:
+  supply-chain-vol:
 
 networks:
   mss_hms_network:
